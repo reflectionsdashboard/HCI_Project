@@ -1,0 +1,93 @@
+{% load fontawesome %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link href="{% static "stylesheets/dashboard.css" %}" rel="stylesheet">
+      {% fontawesome_stylesheet %}
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+ </head>
+</head>
+<body>
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Student Name</a>
+  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" href="#">Sign out</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Dashboard</h1>
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-primary active">
+            <input type="radio" name="options" id="option1" autocomplete="off" checked> Computer Organization
+          </label>
+          <label class="btn btn-primary">
+            <input type="radio" name="options" id="option2" autocomplete="off"> Data Structures
+          </label>
+        </div>
+      </div>
+        <div class="d-flex">
+            <div class="reflections col-6 px-4 shadow p-3 mb-5">
+            <h2 class="text-center">Recent Reflections</h2>
+            <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width: 80%">Reflection</th>
+                <th class="text-center">Topic</th>
+              <th class="text-center">Accurate</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for reflection in reflections %}
+              <tr>
+                  <td class="text-justify">{{ reflection.formatted_description }}</td>
+                  {% if reflection.topic == None %}
+                      <td>-</td>
+                  {% else %}
+                      <td>{{ reflection.topic_id }}</td>
+                  {% endif %}
+              <td>{{ reflection.accuracy_percentage }}%</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+            <div class="text-center font-weight-light font-italic">{{ legend }}</div>
+      </div>
+        </div>
+            <div class="col vertical-center">
+                <canvas id="accuracy_chart"></canvas>
+                <script>
+                    var chartData = {{ chart_data|safe }}
+                        console.log(chartData)
+                    var ctx = document.getElementById("accuracy_chart").getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: chartData,
+                        options: { }
+                });
+                </script>
+
+            </div>
+        </div>
+
+    </main>
+  </div>
+</div>
+
+</body>
+</html>
