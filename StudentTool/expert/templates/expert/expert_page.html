@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Expert Page
+{% endblock %}
+{% block stylesheets %}
+    {% include 'expert/css.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Student Reflections</h1>
+        <button type="submit" class="btn btn-primary" form="reflectionForm">Submit</button>
+    </div>
+    <form id="reflectionForm" action="{% url 'expert:submit' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% for pair in reflections %}
+            <div class="row mb-3">
+
+            {% for reflection in pair %}
+                <div class="col-sm-6">
+                    <div class="card bg-light mb-3">
+                        <div class="card">
+                      <h5 class="card-header lead">{{ reflection.formatted_description }}</h5>
+                      <div class="card-body">
+                            <div class="form-group row">
+                                <label for="colFormLabelLg" class="ml-2 col-form-label col-form-label-lg">Topic</label>
+                                    <div class="col">
+                                        <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                                        <option selected>Choose...</option>
+                                        {% for topic in topics %}
+                                            <option>{{ topic.name }}</option>
+                                        {% endfor %}
+                                </select>
+                                    </div>
+
+                            </div>
+
+                                <div class="form-group row">
+                                    <label for="colFormLabelLg" class="ml-2 col-form-label col-form-label-lg">Score</label>
+                                        <div class="col-2 my-1">
+                                            <input type="text" class="form-control" placeholder="0">
+                                        </div>
+                                    <label for="colFormLabelLg" class="ml-2 col-form-label col-form-label-lg">In-Accuracy Category</label>
+                                        <div class="col">
+                                            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                                            <option selected>Choose...</option>
+                                            {% for category in inaccuracy_categories %}
+                                                <option>{{ category.description }}</option>
+                                            {% endfor %}
+                                    </select>
+                                        </div>
+
+                                </div>
+                      </div>
+                <textarea class="form-control" rows="3" placeholder="recommendations or comments"></textarea>
+                    </div>
+{#                        <div class="card-badge">CO</div>#}
+                    </div>
+              </div>
+            {% endfor %}
+            </div>
+    {% endfor %}
+    </form>
+
+{% endblock %}

@@ -39,8 +39,9 @@ INSTALLED_APPS = [
     'bootstrap4',
     'accounts',
     'reflections',
+    'expert',
     'dashboard',
-    'fontawesome',
+    'tweepy',
     'chartjs'
 ]
 

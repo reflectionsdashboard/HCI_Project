@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'base/css.html' %}
+    {% include 'base/js.html' %}
+
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            Student Tool
+        {% endblock %}
+    </title>
+
+    {% block scripts %}
+    {% endblock %}
+    {% block stylesheets %}
+    {% endblock %}
+ </head>
+</head>
+<body>
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Student Name</a>
+  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" href="#">Sign out</a>
+    </li>
+  </ul>
+</nav>
+<div class="container-fluid">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+</div>
+</body>
+</html>
