@@ -12,56 +12,43 @@
             <h1 class="h2">Student Reflections</h1>
         <button type="submit" class="btn btn-primary" form="reflectionForm">Submit</button>
     </div>
+
     <form id="reflectionForm" action="{% url 'expert:submit' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-
-    {% for pair in reflections %}
+        {% csrf_token %}
+    {{ reflection_form_set.management_form }}
+        {% for forms in reflection_form_set %}
             <div class="row mb-3">
-
-            {% for reflection in pair %}
-                <div class="col-sm-6">
-                    <div class="card bg-light mb-3">
-                        <div class="card">
-                      <h5 class="card-header lead">{{ reflection.formatted_description }}</h5>
-                      <div class="card-body">
-                            <div class="form-group row">
-                                <label for="colFormLabelLg" class="ml-2 col-form-label col-form-label-lg">Topic</label>
-                                    <div class="col">
-                                        <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                                        <option selected>Choose...</option>
-                                        {% for topic in topics %}
-                                            <option>{{ topic.name }}</option>
-                                        {% endfor %}
-                                </select>
-                                    </div>
-
-                            </div>
-
+            {% for form in forms %}
+            {{ form.id }}
+            {{ form.description }}
+            {{ form.subject }}
+                <div class="col-6">
+                    <div class="card border-primary mb-3">
+                            <h5 class="card-header lead">{{ form.description.value }}</h5>
+                            <div class="card-body">
                                 <div class="form-group row">
-                                    <label for="colFormLabelLg" class="ml-2 col-form-label col-form-label-lg">Score</label>
-                                        <div class="col-2 my-1">
-                                            <input type="text" class="form-control" placeholder="0">
-                                        </div>
-                                    <label for="colFormLabelLg" class="ml-2 col-form-label col-form-label-lg">In-Accuracy Category</label>
-                                        <div class="col">
-                                            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                                            <option selected>Choose...</option>
-                                            {% for category in inaccuracy_categories %}
-                                                <option>{{ category.description }}</option>
-                                            {% endfor %}
-                                    </select>
-                                        </div>
-
+                                <label for="{{ form.topic.id }}" class="ml-2 col-form-label col-form-label-lg">Topic</label>
+                                    <div class="col">
+                                    {{ form.topic }}
+                                    </div>
                                 </div>
-                      </div>
-                <textarea class="form-control" rows="3" placeholder="recommendations or comments"></textarea>
-                    </div>
-{#                        <div class="card-badge">CO</div>#}
-                    </div>
-              </div>
+                                <div class="form-group row">
+                                    <label for="{{ form.accuracy.id }}" class="ml-2 col-form-label col-form-label-lg">Accuracy</label>
+                                        <div class="col-2 my-1">
+                                            {{ form.accuracy }}
+                                        </div>
+                                    <label for="{{ form.inaccuracy_category.id }}" class="ml-2 col-form-label col-form-label-lg">In-Accuracy Category</label>
+                                        <div class="col">
+                                            {{ form.inaccuracy_category }}
+                                        </div>
+                                </div>
+                            </div>
+                            {{ form.comments }}
+                        </div>
+                </div>
             {% endfor %}
             </div>
-    {% endfor %}
+        {% endfor %}
     </form>
 
 {% endblock %}

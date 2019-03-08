@@ -38,21 +38,25 @@ class Reflection(models.Model):
         unique_together = (('id', 'student_id'),)
 
     id = models.AutoField(primary_key=True)
-    student_id = models.IntegerField()
-    description = models.TextField()
-    subject = models.ForeignKey(Subject, default=None, on_delete=models.CASCADE)
+    student_id = models.IntegerField(blank=True)
+    description = models.TextField(blank=True)
+    subject = models.ForeignKey(Subject, default=None, blank=True, on_delete=models.CASCADE)
     topic = models.ForeignKey(Topic, default=None, on_delete=models.CASCADE, blank=True, null=True)
     accuracy = models.IntegerField(
         default=0,
         validators=[
             MaxValueValidator(10),
             MinValueValidator(0)
-        ]
+        ],
+        blank=True
     )
-    inaccuracy_category = models.ForeignKey(InAccuracyCategory, default=None, on_delete=models.DO_NOTHING, blank=True, null=True)
+    inaccuracy_category = models.ForeignKey(InAccuracyCategory, default=None, on_delete=models.DO_NOTHING,
+                                            blank=True, null=True)
+    comments = models.TextField(blank=True, null=True)
+    is_pending = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.description
+        return str(self.id) + " " + self.description
 
     def formatted_description(self):
         sentences = self.description.split(". ")
