@@ -26,7 +26,7 @@ SECRET_KEY = '#hl+9l-^iu&pk2%nbtf$po+f6as023*xfhv8rkv$csb3ovh^v_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','https://desolate-mountain-86173.herokuapp.com/','https://hci-dashboard.herokuapp.com/dashboard/']
 
 # Application definition
 
@@ -87,6 +87,10 @@ DATABASES = {
     }
 }
 
+import dj_database_url
+
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
