@@ -26,7 +26,7 @@ SECRET_KEY = '#hl+9l-^iu&pk2%nbtf$po+f6as023*xfhv8rkv$csb3ovh^v_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','https://desolate-mountain-86173.herokuapp.com/','https://hci-dashboard.herokuapp.com/dashboard/']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','limitless-tundra-70483.herokuapp.com/','hci-dashboard.herokuapp.com']
 
 # Application definition
 
