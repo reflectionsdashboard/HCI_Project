@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,7 @@ SECRET_KEY = '#hl+9l-^iu&pk2%nbtf$po+f6as023*xfhv8rkv$csb3ovh^v_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','limitless-tundra-70483.herokuapp.com/','hci-dashboard.herokuapp.com']
 
 # Application definition
 
@@ -39,10 +40,10 @@ INSTALLED_APPS = [
     'bootstrap4',
     'accounts',
     'reflections',
-    'expert',
     'dashboard',
-    'tweepy',
-    'chartjs'
+    'fontawesome',
+    'chartjs',
+    'StudentTool'
 ]
 
 MIDDLEWARE = [
@@ -86,6 +87,10 @@ DATABASES = {
     }
 }
 
+import dj_database_url
+
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -128,3 +133,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "assets"),
 )
+
+
+django_heroku.settings(locals())
