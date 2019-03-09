@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-import django_heroku
+import django_heroku as HEROKU
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -41,10 +42,8 @@ INSTALLED_APPS = [
     'accounts',
     'reflections',
     'dashboard',
-    'fontawesome',
     'chartjs',
     'expert',
-    # 'tweepy',
     'StudentTool'
 ]
 
@@ -89,10 +88,8 @@ DATABASES = {
     }
 }
 
-import dj_database_url
-
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
+DB_FROM_ENV = dj_database_url.config()
+DATABASES['default'].update(DB_FROM_ENV)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -136,5 +133,5 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "assets"),
 )
 
+HEROKU.settings(locals())
 
-django_heroku.settings(locals())

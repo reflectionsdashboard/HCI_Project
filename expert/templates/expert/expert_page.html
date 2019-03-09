@@ -10,9 +10,14 @@
 {% block content %}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Student Reflections</h1>
+        {% if reflection_form_set %}
         <button type="submit" class="btn btn-primary" form="reflectionForm">Submit</button>
+        {% else %}
+        <button type="submit" class="btn btn-primary" form="reflectionForm" disabled>Submit</button>
+        {% endif %}
     </div>
 
+    {% if reflection_form_set %}
     <form id="reflectionForm" action="{% url 'expert:submit' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
     {{ reflection_form_set.management_form }}
@@ -23,7 +28,7 @@
             {{ form.description }}
             {{ form.subject }}
                 <div class="col-6">
-                    <div class="card border-primary mb-3">
+                    <div class="card bg-light mb-3">
                             <h5 class="card-header lead">{{ form.description.value }}</h5>
                             <div class="card-body">
                                 <div class="form-group row">
@@ -50,5 +55,10 @@
             </div>
         {% endfor %}
     </form>
+    {% else %}
+        <div class="d-flex">
+            <span class="align-middle">No reflections to show</span>
+        </div>
+    {% endif %}
 
 {% endblock %}
