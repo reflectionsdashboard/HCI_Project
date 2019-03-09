@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'dashboard',
     'fontawesome',
     'chartjs',
+    'expert',
+    'tweepy',
     'StudentTool'
 ]
 
