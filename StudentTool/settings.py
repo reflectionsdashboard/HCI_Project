@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'fontawesome',
     'chartjs',
     'expert',
-    'tweepy',
+    # 'tweepy',
     'StudentTool'
 ]
 
