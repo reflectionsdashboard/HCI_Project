@@ -7,7 +7,7 @@ from django.forms import modelformset_factory
 def show_expert_view(request):
     reflection_form_set = modelformset_factory(Reflection, form=ReflectionForm, exclude=(), extra=0)
     form_set = reflection_form_set(queryset=Reflection.objects.filter(is_pending=True))
-    form_set = form_chunks(form_set.forms, 2)
+    # form_set = form_chunks(form_set.forms, 2)
     return render(request, 'expert/expert_page.html', {'reflection_form_set': form_set})
 
 

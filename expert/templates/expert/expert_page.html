@@ -21,13 +21,13 @@
     <form id="reflectionForm" action="{% url 'expert:submit' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
     {{ reflection_form_set.management_form }}
-        {% for forms in reflection_form_set %}
-            <div class="row mb-3">
-            {% for form in forms %}
+        {% for form in reflection_form_set %}
+{#            <div class="row mb-3">#}
+{#            {% for form in forms %}#}
             {{ form.id }}
             {{ form.description }}
             {{ form.subject }}
-                <div class="col-6">
+                <div class="col-12">
                     <div class="card bg-light mb-3">
                             <h5 class="card-header lead">{{ form.description.value }}</h5>
                             <div class="card-body">
@@ -53,7 +53,7 @@
                 </div>
             {% endfor %}
             </div>
-        {% endfor %}
+{#        {% endfor %}#}
     </form>
     {% else %}
         <div class="d-flex">
