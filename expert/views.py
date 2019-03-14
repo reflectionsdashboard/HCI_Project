@@ -80,9 +80,9 @@ def get_tweets():
                 subject = Subject(name = hashTag);
                 subject.save();
                 print(hashTag + finedData['id_str']);
-                reflection = Reflection(tweet_id=finedData['id_str'], tweet_date=parser.parse(finedData['created_at']), student_id=finedData['user']['id_str'],
-                    student_handle=finedData['user']['screen_name'], description=finedData['text'], subject=subject);
-                reflection.save()
+                # reflection = Reflection(tweet_id=finedData['id_str'], tweet_date=parser.parse(finedData['created_at']), student_id=finedData['user']['id_str'],
+                    # student_handle=finedData['user']['screen_name'], description=finedData['text'], subject=subject);
+                # reflection.save()
                 if(finedData['id_str'] > last_tweet_id):
                     last_tweet_id = finedData['id_str'];
         else:
@@ -92,9 +92,9 @@ def get_tweets():
                 subject = Subject(name = hashTag);
                 subject.save();
 
-                reflection = Reflection(tweet_id=finedData['id_str'], tweet_date=parser.parse(finedData['created_at']), student_id=finedData['user']['id_str'],
-                    student_handle=finedData['user']['screen_name'], description=finedData['text'], subject=subject);
-                reflection.save()
+                # reflection = Reflection(tweet_id=finedData['id_str'], tweet_date=parser.parse(finedData['created_at']), student_id=finedData['user']['id_str'],
+                    # student_handle=finedData['user']['screen_name'], description=finedData['text'], subject=subject);
+                # reflection.save()
                 if(finedData['id_str'] > last_tweet_id):
                     last_tweet_id = finedData['id_str'];
 
@@ -103,8 +103,8 @@ def get_tweets():
         # break
 
     f = open("tweetsPointer.txt","w");
-    for item in hashTagDict:
-        f.write(item + ":" + hashTagDict[item] + "\n");
+    # for item in hashTagDict:
+        # f.write(item + ":" + hashTagDict[item] + "\n");
     f.close();
 
             
