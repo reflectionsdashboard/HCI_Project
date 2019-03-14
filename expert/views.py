@@ -65,34 +65,38 @@ def get_tweets():
     auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
 
     api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True, compression=True)
-    # since_id="1099791211219558400"
+
     for hashTag in hashTags:
         if not hashTag in hashTagDict:
             hashTagDict[hashTag] = "0"
 
         last_tweet_id = hashTagDict[hashTag];
+        # print(hashTag)
+        # print("first" + last_tweet_id)
         if hashTagDict[hashTag] == "0":
             for status in tweepy.Cursor(api.search, q=hashTag, lang='en').items(200):
                 finedData = status._json;
 
                 subject = Subject(name = hashTag);
                 subject.save();
-
+                print(hashTag + finedData['id_str']);
                 reflection = Reflection(tweet_id=finedData['id_str'], tweet_date=parser.parse(finedData['created_at']), student_id=finedData['user']['id_str'],
                     student_handle=finedData['user']['screen_name'], description=finedData['text'], subject=subject);
                 reflection.save()
-                last_tweet_id = finedData['id_str'];
+                if(finedData['id_str'] > last_tweet_id):
+                    last_tweet_id = finedData['id_str'];
         else:
-            for status in tweepy.Cursor(api.search,since_id=hashTagDict[hashTag], q=hashTag, lang='en').items(200):
+            for status in tweepy.Cursor(api.search, since_id=hashTagDict[hashTag], q=hashTag, lang='en').items(200):
                 finedData = status._json;
-
+                print(hashTag + finedData['id_str']);
                 subject = Subject(name = hashTag);
                 subject.save();
 
                 reflection = Reflection(tweet_id=finedData['id_str'], tweet_date=parser.parse(finedData['created_at']), student_id=finedData['user']['id_str'],
                     student_handle=finedData['user']['screen_name'], description=finedData['text'], subject=subject);
                 reflection.save()
-                last_tweet_id = finedData['id_str'];
+                if(finedData['id_str'] > last_tweet_id):
+                    last_tweet_id = finedData['id_str'];
 
         hashTagDict[hashTag] = last_tweet_id;
 
@@ -199,5 +203,10 @@ def get_tweets():
 #     "retweeted": false, 
 #     "lang": "en"
 # }
+
+
+
+
+
 
 
