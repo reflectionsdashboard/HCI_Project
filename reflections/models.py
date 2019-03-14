@@ -39,7 +39,7 @@ class Reflection(models.Model):
 
     id = models.AutoField(primary_key=True)
     tweet_id = models.CharField('Tweet Id', max_length=20);
-    student_id = models.IntegerField(blank=True)
+    student_id = models.CharField('Student Id', max_length=50)
     student_handle = models.CharField('User Name', max_length=50)
     description = models.TextField(blank=True)
     subject = models.ForeignKey(Subject, default=None, blank=True, on_delete=models.CASCADE)
