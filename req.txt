@@ -1,9 +1,0 @@
-django
-gunicorn
-django-heroku
-bootstrap4
-django-bootstrap4
-fontawesome
-chartjs
-tweepy
-python-dateutil
