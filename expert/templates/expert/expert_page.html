@@ -10,8 +10,11 @@
 {% block content %}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Student Reflections</h1>
+
+        <button type="button" class="btn btn-primary" onclick="window.location.href = './'" >Download</button>
+
         {% if reflection_form_set %}
-        <button type="submit" class="btn btn-primary" form="reflectionForm">Submit</button>
+        <button type="submit" class="btn btn-primary" form="reflectionForm" >Submit</button>
         {% else %}
         <button type="submit" class="btn btn-primary" form="reflectionForm" disabled>Submit</button>
         {% endif %}
