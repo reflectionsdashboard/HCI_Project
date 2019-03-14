@@ -49,9 +49,8 @@ def get_tweets():
     for status in tweepy.Cursor(api.search, q='#DataStructuresInRealLife', since_id="1099791211219558400", lang='en').items(200):
         finedData = status._json;
         print(finedData['entities']['urls'])
-        event = Event(tweet_id=finedData['id_str'], tweet_date=finedData['created_at'], user_id=finedData['user']['id_str'],
-            user_name=finedData['user']['name'], content=finedData['text']
-            )
+        # event = Event(tweet_id=finedData['id_str'], tweet_date=finedData['created_at'], user_id=finedData['user']['id_str'],
+            # user_name=finedData['user']['name'], content=finedData['text'])
         break
         
     for status in tweepy.Cursor(api.search, q='#CompOrgInRealLife', since_id="1099791211219558400", lang='en').items(200):
