@@ -2,8 +2,8 @@ run virtual environment: pipenv shell
 
 run database: python manage.py migrate
 
-create new model in database: python manage.py makemigrations expert
-			      python manage.py migrate expert
+create new model in database: python manage.py makemigrations reflections
+			      python manage.py migrate reflections
 
 run python after virtual: python manage.py runserver
 
