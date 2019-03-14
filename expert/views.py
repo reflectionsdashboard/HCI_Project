@@ -1,8 +1,11 @@
 from django.shortcuts import render, HttpResponse
 from reflections.models import Reflection
+from reflections.models import Subject
 from reflections.forms import ReflectionForm
 from django.forms import modelformset_factory
-from expert.models import Event
+from reflections.models import models
+from dateutil import parser
+
 try:
     import json
 except ImportError:
@@ -11,6 +14,8 @@ except ImportError:
 # Import the tweepy library
 import tweepy
 
+hashTags = ['#DataStructuresInRealLife', '#CompOrgInRealLife'];
+hashTagDict = {}
 # Variables that contains the user credentials to access Twitter API 
 ACCESS_TOKEN = '963141792370749441-EvzYveF3rcNMSKLctuVPXX6eyzf3w45'
 ACCESS_SECRET = 'DYGFBHsgaQtKfCHky8ka6ycZxsvLGSoDtuA0iUnIDSGQT'
@@ -43,25 +48,76 @@ def form_chunks(forms, size):
 
 
 def get_tweets():
-    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-    auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
-    api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True, compression=True)
-    for status in tweepy.Cursor(api.search, q='#DataStructuresInRealLife', since_id="1099791211219558400", lang='en').items(200):
-        finedData = status._json;
-        print(finedData['entities']['urls'])
-        # event = Event(tweet_id=finedData['id_str'], tweet_date=finedData['created_at'], user_id=finedData['user']['id_str'],
-            # user_name=finedData['user']['name'], content=finedData['text'])
-        break
-        
-    for status in tweepy.Cursor(api.search, q='#CompOrgInRealLife', since_id="1099791211219558400", lang='en').items(200):
-            # f.write(json.dumps(status._json) + "\n")
+    try:
+        f = open("tweetsPointer.txt","r");
+        for lines in f:
+            tag = lines.split(":")[0].strip();
+            pointer = lines.split(":")[1].strip();
+            if(pointer == ""):
+                pointer = "0";
+            hashTagDict[tag] = pointer;
+        f.close();
+    except:
         pass
+
+    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+
+    auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
+
+    api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True, compression=True)
+    # since_id="1099791211219558400"
+    for hashTag in hashTags:
+        if not hashTag in hashTagDict:
+            hashTagDict[hashTag] = "0"
+
+        last_tweet_id = hashTagDict[hashTag];
+        if hashTagDict[hashTag] == "0":
+            for status in tweepy.Cursor(api.search, q=hashTag, lang='en').items(200):
+                finedData = status._json;
+
+                subject = Subject(name = hashTag);
+                subject.save();
+
+                reflection = Reflection(tweet_id=finedData['id_str'], tweet_date=parser.parse(finedData['created_at']), student_id=finedData['user']['id_str'],
+                    student_handle=finedData['user']['screen_name'], description=finedData['text'], subject=subject);
+                reflection.save()
+                last_tweet_id = finedData['id_str'];
+        else:
+            for status in tweepy.Cursor(api.search,since_id=hashTagDict[hashTag], q=hashTag, lang='en').items(200):
+                finedData = status._json;
+
+                subject = Subject(name = hashTag);
+                subject.save();
+
+                reflection = Reflection(tweet_id=finedData['id_str'], tweet_date=parser.parse(finedData['created_at']), student_id=finedData['user']['id_str'],
+                    student_handle=finedData['user']['screen_name'], description=finedData['text'], subject=subject);
+                reflection.save()
+                last_tweet_id = finedData['id_str'];
+
+        hashTagDict[hashTag] = last_tweet_id;
+
+        # break
+
+    f = open("tweetsPointer.txt","w");
+    for item in hashTagDict:
+        f.write(item + ":" + hashTagDict[item] + "\n");
+    f.close();
+
+            
+                # if not finedData['id_str'] in tweets_id_list:
+
+                
+
+                
+
+                
+
 
 # #sample json format of tweet
 # {
 #     "created_at": "Wed Feb 20 22:31:42 +0000 2019", 
 #     "id": 1098349504707903488, 
-#     "id_str": "1098349504707903488", 
+#     "id_str": "1098349504707903488", retri
 #     "text": "A queue can be used to represent the line to speak to an advisor. Queues work in a first-in-first-out manner, so th\u2026 https://t.co/6nMwAGii0V", 
 #     "truncated": true, 
 #     "entities": {
