@@ -7,3 +7,4 @@ create new model in database: python manage.py makemigrations reflections
 
 run python after virtual: python manage.py runserver
 
+create lcoal database : python3 manage.py migrate --run-syncdb

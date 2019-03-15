@@ -37,14 +37,13 @@ class Reflection(models.Model):
     class Meta:
         unique_together = (('id', 'student_id'),)
 
-    id = models.AutoField(primary_key=True)
-    tweet_id = models.CharField('Tweet Id', max_length=20);
-    student_id = models.CharField('Student Id', max_length=50)
-    student_handle = models.CharField('User Name', max_length=50)
+    id = models.CharField(max_length=20, primary_key=True)
+    student_id = models.CharField(max_length=50)
+    student_handle = models.CharField(max_length=50)
     description = models.TextField(blank=True)
     subject = models.ForeignKey(Subject, default=None, blank=True, on_delete=models.CASCADE)
     topic = models.ForeignKey(Topic, default=None, on_delete=models.CASCADE, blank=True, null=True)
-    tweet_date = models.DateTimeField('Tweet Date');
+    date = models.DateTimeField()
 
     accuracy = models.IntegerField(
         default=0,
