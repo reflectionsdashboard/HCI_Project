@@ -23,8 +23,7 @@ def submit_analysis(request):
             reflection.is_pending = False
             reflection_form.save()
 
-    return HttpResponse("Data Submitted Succesfully")
-
+    return show_expert_view(request)
 
 def form_chunks(forms, size):
     return [forms[i:i + size] for i in range(0, len(forms), size)]
