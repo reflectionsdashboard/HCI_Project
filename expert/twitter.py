@@ -5,7 +5,7 @@ import tweepy
 
 hashTagDict = {
     '#DataStructuresInRealLife': 'Data Structures',
-    'CompOrgInRealLife': 'Computer Organization'
+    '#CompOrgInRealLife': 'Computer Organization'
 }
 
 # Variables that contains the user credentials to access Twitter API
@@ -33,17 +33,19 @@ class TwitterAPI:
 
             if subject_reflections.__len__() > 0:
                 last_tweet_id = subject_reflections.latest(field_name='id')
-                tweets = tweepy.Cursor(api.search, since_id=last_tweet_id, q=hashTag, lang='en').items(100)
+                tweets = tweepy.Cursor(api.search, since_id=last_tweet_id, tweet_mode="extended", q=hashTag, lang='en').items(100)
                 print(last_tweet_id)
             else:
-                print('Nothing found, downloading last 10')
-                tweets = tweepy.Cursor(api.search, q=hashTag, lang='en', since="2019-01-01").items(10)
+                print('Nothing found, downloading last 200')
+                tweets = tweepy.Cursor(api.search, q=hashTag, tweet_mode="extended", lang='en').items(200)
 
             for status in tweets:
                 parsed_data = status._json;
 
+                # print(status)
+
                 # print(hashTag + parsed_data['id_str']);
-                description = parsed_data['text']        #We need to clean it afterwards
+                description = parsed_data['full_text']        #We need to clean it afterwards
                 reflection = Reflection(id=parsed_data['id_str'],
                                         student_id=parsed_data['user']['id_str'],
                                         student_handle=parsed_data['user']['screen_name'],
