@@ -35,7 +35,13 @@
           <tbody>
           {% for reflection in reflections %}
               <tr>
-                  <td class="text-justify">{{ reflection.formatted_description }}</td>
+                  <td class="text-justify">
+                      {{ reflection.formatted_description }}
+                      {% if reflection.comments|length > 0 %}
+                      <br>
+                      <b>Expert Comments: </b>{{ reflection.comments}}
+                      {% endif %}
+                  </td>
                   {% if reflection.topic == None %}
                       <td>-</td>
                   {% else %}
