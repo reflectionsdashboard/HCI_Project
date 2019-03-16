@@ -6,7 +6,7 @@ import json
 
 
 def show_dashboard(request):
-    reflections = Reflection.objects.filter(is_pending=False)
+    reflections = Reflection.objects.filter(is_pending=False).order_by('id')[:5][::-1]
     legend = return_topic_legend(reflections)
     chart_data = return_json(reflections)
     json_chart_data = json.dumps(chart_data, ensure_ascii=False, sort_keys=True, indent=4)
