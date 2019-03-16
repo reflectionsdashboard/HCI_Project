@@ -20,8 +20,16 @@ def submit_analysis(request):
     for reflection_form in formset:
         if reflection_form.is_valid() and reflection_form.has_changed():
             reflection = reflection_form.save(commit=False)
-            reflection.is_pending = False
-            reflection_form.save()
+            if 'description' in reflection_form.changed_data:
+                reflection_form.changed_data.remove('description')
+
+            if len(reflection_form.changed_data) > 0:
+                    print("---------PRINT----------")
+                    print(reflection_form.changed_data)
+                    print(reflection)
+
+                    reflection.is_pending = False
+                    reflection_form.save()
 
     return show_expert_view(request)
 
