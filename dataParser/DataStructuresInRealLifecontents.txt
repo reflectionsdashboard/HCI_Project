@@ -1,0 +1,73 @@
+So much for the theory that the valet check luggage is a stack... Last bag queueing. #LIFO #FIFO #datastructuresinreallife
+x
+Trees! #DataStructuresInRealLife
+x
+Me losing my keys and having to think back to when I last had them made me realize my mind is actually just a linked list of memories #DataStructuresInRealLife
+x
+The stack data structure is like a stack of plates. A plate gets placed on the top of the stack and the top plate will be the first to be removed. #DataStructuresInRealLife
+x
+#DataStructuresInRealLife
+
+When you play chess, you use a mental minimax tree to evaulate the effectiveness of each individual move; taken from an array of possible moves, you apply the move to the game state and quantify the resultant state’s performance.
+x
+Professional networking is essentially a breadth first search of a gigantic undirected graph #DataStructuresInRealLife
+x
+Insertion sort looks like people with less patience skipping ahead of the line as they first walk into it.
+#DataStructuresInRealLife
+x
+similar to implementing ARM programing language using ADD, LDR, and execute functions
+
+#CompOrgInRealLife #DataStructuresInRealLife 
+#NeedTheEC
+x
+Stack data structure looks similar to Pringles container. Pringles are stacked in the open-closed container, and you eat them from the top. When you try to eat Pringles, you get one from the top. It's like when you pop a stack, the top element comes out.
+#DataStructuresInRealLife
+x
+Actually, upon further analysis I have concluded my mind is not a linked list of memories because access of any memory is O(1) and insertion is O(n). So my mind is actually just a sparse array of memories #DataStructuresInRealLife
+x
+computational thinking: knowing about algorithms and computer architecture influence everyday activities #CompOrgInRealLife #DataStructuresInRealLife #SIGCSE2019 @guzdial
+x
+Looking at our phones to check messages is similar how polling works in a computer. It takes up precious time.  Instead, we turn on a sound or vibration that "calls an interrupt" to notify us, so that we can focus on other tasks.  
+#CompOrgInRealLife #DataStructuresInRealLife
+x
+Our body goes into low power mode when we are sleeping, as do computers. Critical tasks take place like garbage collection, security updates, and general maintenance. Our bodies do the same thing with cleaning chemicals off the brain. 
+#CompOrgInRealLife #DataStructuresInRealLife
+x
+From a pack of bread, I always choose the top most bread slice. Works like a stack. #DataStructuresInRealLife
+x
+I organized my bookshelf by author. Sort! Now I can binary search it to find a particular book! #DataStructuresInRealLife
+x
+preparing leftover spaghetti:
+
+load noodles from fridge
+add noodles to plate
+load meatsauce from fridge
+add noodles to plate
+microwave
+load cheese from fridge 
+add cheese to plate
+consume
+
+#CompOrgInRealLife #DataStructuresInRealLife #NeedTheExtraCredit
+x
+Data structures can be used to model real life situations. For example, a queue can be used to represent the line at the DMV. Queues are first-in-first-out, or FIFO, so the first person in line is served first. #DataStructuresInRealLIfe #CompOrgInRealLife
+x
+When you choose what to eat out of all the choices in the refrigerator based on what you're craving, you're like a multiplexer choosing from lots of inputs based on an input signal.
+#CompOrgInRealLife #DataStructuresInRealLife
+x
+Class extra credit:
+
+Idea: Data structures - Sorting  And Booleon logic; washing clothes(Is the clothes  dirty, is it clean, is it wet, is it dry? Should it be washed or dried? Do I stack the finished clothes, pants shirts  then socks?
+#DataStructuresInRealLife
+#CompOrgInRealLife
+x
+#DataStructuresInRealLife I use a stack to park all of my cars in my driveway. Since my driveway is linear, the last car that I pull into my driveway is the first car that I have to push out the next time I want to go driving.
+x
+A Pringles can works like a stack in that you can only take out (pop) the top chip #DataStructuresInRealLife
+x
+I ate pancakes for breakfast this morning. A stack of pancakes works like a stack because you eat the pancake that is on top of the stack first (LIFO).
+x
+being able to search for the perfect gif for the groupchat, thanks to sorting algorithms #DataStructuresInRealLife
+x
+Trees can relate to real life in a plethora of ways. Take, for example, a library! Books are sorted alphabetically by the name of the author. Working through the tree could be equated to walking through a library to find your book. #DataStructuresInRealLife
+x

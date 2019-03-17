@@ -1,0 +1,131 @@
+#CompOrgInRealLife doing laundry is like a pipeline.  While one load is being folded, another is in the dryer and another is in the washer.
+x
+#CompOrgInRealLife choosing a meal is like a set of logic gates: one meat and one vegetable and one drink.  (Chicken or beef) and (peas or beans) and (milk or water)
+x
+#CompOrgInRealLife two's complement is like real life
+x
+For dinner, I have to choose either pork or beef but not both since there'll be too much protein. Abit of like exclusive OR boolean logic. #CompOrgInRealLife
+x
+#CompOrginRealLife If you are sick, and you kiss someone, they will get sick.  AND Gate right there.
+x
+To make dinner, I have to take out veggies and meat from the fridge and then cook them. Sounds like ldr and add functions in ARM assembly language. #CompOrgInRealLife
+x
+Boolean logic in real life: Getting dressed, tops (5 options) and bottoms (3options) or a one piece (2 options).  #CompOrginRealLife
+x
+Data structures can be used to model real life situations. For example, a queue can be used to represent the line at the DMV. Queues are first-in-first-out, or FIFO, so the first person in line is served first. #DataStructuresInRealLIfe #CompOrgInRealLife
+x
+When you choose what to eat out of all the choices in the refrigerator based on what you're craving, you're like a multiplexer choosing from lots of inputs based on an input signal.
+#CompOrgInRealLife #DataStructuresInRealLife
+x
+when I choose my dinner i use boolean algebra -- if i'm hungry i eat rice, if i'm sad i eat ice cream, and if i'm hungry and sad i go to chick-fil-a #CompOrgInRealLife
+x
+preparing leftover spaghetti:
+
+load noodles from fridge
+add noodles to plate
+load meatsauce from fridge
+add noodles to plate
+microwave
+load cheese from fridge 
+add cheese to plate
+consume
+
+#CompOrgInRealLife #DataStructuresInRealLife #NeedTheExtraCredit
+x
+similar to implementing ARM programing language using ADD, LDR, and execute functions
+
+#CompOrgInRealLife #DataStructuresInRealLife 
+#NeedTheEC
+x
+When I'm having breakfast I always have to decide if I want my eggs over easy or scrambled. #CompOrgInRealLife
+x
+#CompOrgInRealLife
+
+Similar to assigning X0 and X1 with an input specifier and a data value respectively, we must first mentally understand the type of thing we will say and the exact words we will use before we speak.
+x
+Choosing what to wear depends on the location, event and the weather for when you’re going to wear it. It’s like a multiplexer that chooses the final output result based on the combination of inputs. #CompOrgInRealLife
+x
+If you need a better grade, and an extra credit assignment is offered, then you complete the extra credit assignment #ANDGATE #CompOrgInRealLife #ineedtheextracredit
+x
+Every electronic device use digital logic systems to make decisions, and each of these individual systems consists of digital logic gates. For example, the computer I am typing this message on contains over one billion logic gates. #CompOrgInRealLife
+x
+The idea of denormalized numbers is used outside of computer organization. For instance, in measurement, the smaller the measurement, the more approximate the number becomes. Thus, it becomes denormalized. #CompOrgInRealLife
+x
+From computer organization, you can use Boolean logic in order to determine the faulty products within a manufacturing company, thus sorting good from bad, and outputting the most optimal product. #CompOrgInRealLife
+x
+a multiplexer is like a menu. the input is our options and we select many different options and variations and combine them until we output our perfect dish. #CompOrgInRealLife
+x
+Cooking is kind of like a multiplexor--it takes multiple inputs (ingredients) and outputs a single dish #CompOrgInRealLife
+x
+I looked through videos from my summer trip. External to main memory #CompOrgInRealLife
+x
+I studied notes from an old class period. External to Main memory. #CompOrgInRealLife
+x
+When painting, you need a sponge and paint brush. When you finish painting, the sponge is dirty so you throw it away, but you clean and store the paint brush for later use. This is like the returns of functions that keep the variables that have value.
+#CompOrgInRealLife
+x
+#CompOrgInRealLife A decoder selects from a series of outputs based on selection signals. This is like deciding whether to drive the convertible, the sports car, the SUV, or the Prius depending on the day’s weather and gas prices.
+x
+#CompOrgInRealLife 
+Making purchasing decisions uses some form of Boolean Logic. For example, when buying music, you can get the physical CD copy, the mp3 download, OR both. If you chose the get the mp3 download you can either purchase individual tracks OR the full album.
+x
+If-else statements and four-way traffic lights are examples of Boolean logic irl. If there is no car waiting, the light won't change. If there is a car waiting, the light will change. #CompOrgInRealLife
+x
+The decisions you make when you go to a party are boolean logic based. You can sing AND dance OR you can sit down AND have a drink #CompOrgInRealLife
+x
+CompOrg concepts are extremely useful in creating jailbreaks (software used to mod an iOS device device) as ARM programming helps instal these mods #CompOrgInRealLife
+x
+They say you never forget how to ride a bike, but you can still be shaky. It's like you started writing code weeks ago and then left it until the day before it's due. You look over it and are like, "I know I wrote this. But wtf is this?"
+#CompOrgInRealLife
+x
+#CompOrgInRealLife A complicated system of highways is analogous to a datapath. Cars are following certain set paths to get to their respective destinations.
+x
+Stoplights and traffic patterns are examples of digital logic being modelled in real life. Each direction of pedestrian and vehicle traffic can be thought of as logic channels with the output being whether or not a lane is moving. #CompOrgInRealLife
+x
+computational thinking: knowing about algorithms and computer architecture influence everyday activities #CompOrgInRealLife #DataStructuresInRealLife #SIGCSE2019 @guzdial
+x
+Class extra credit:
+
+Idea: Data structures - Sorting  And Booleon logic; washing clothes(Is the clothes  dirty, is it clean, is it wet, is it dry? Should it be washed or dried? Do I stack the finished clothes, pants shirts  then socks?
+#DataStructuresInRealLife
+#CompOrgInRealLife
+x
+#CompOrgInRealLife a line at the grocery store models a queue data structure
+x
+Looking at our phones to check messages is similar how polling works in a computer. It takes up precious time.  Instead, we turn on a sound or vibration that "calls an interrupt" to notify us, so that we can focus on other tasks.  
+#CompOrgInRealLife #DataStructuresInRealLife
+x
+Our body goes into low power mode when we are sleeping, as do computers. Critical tasks take place like garbage collection, security updates, and general maintenance. Our bodies do the same thing with cleaning chemicals off the brain. 
+#CompOrgInRealLife #DataStructuresInRealLife
+x
+Today I made a choice between pepperoni pizza or cheese pizza and since there was only two choices it was Boolean logic. #CompOrgInRealLife
+x
+Storing data in registers is similar to organizing your room in that you have to store things in certain places and keep track of where you put them #CompOrgInRealLife
+x
+when the door is closed, the engine is running, and the seat belt is unbuckled, those are 0's and 1's forcing your car to scream at you because of boolean logic #CompOrgInRealLife
+x
+We apply boolean logic almost every single time we have to make a decision.
+As a student i see some examples like 
+if I read all the chapters, AND study the practice problems AND NOT waste time playing video games, I will then get a good grade on the exam.
+#CompOrgInRealLife
+x
+pushing and popping data from the stack it's just like me throwing stuff in my drawers on top of each other, if I need to get whatever I have at the bottom, I have
+to take every single item that is on top, get that one out and then throw the rest back in  #CompOrgInRealLife
+x
+#CompOrgInRealLife
+Board games involving dice rolls could be modeled after boolean logic. Each number is either a 0 or 1 upon being rolled and the quantity of that number could be stored as well.
+x
+#CompOrgInRealLife The clock in a computer is like the heart. An increase in heart rate can help us move more quickly, similar to a higher clock rate leading to more instructions. Too high of a rate can have bad consequences though, like fatigue/a heart attack and overheating.
+x
+Boolean logic, as taught in Computer Organization by Professor Resch, is seen in real life in gate entrances in an apartment complex. If the driver is a resident AND has the card for access into the complex, then the driver will enter the building. #CompOrgInRealLife
+x
+#CompOrgInRealLife A multiplexor selects from multiple inputs to produce one output. This is similar to a TV, where you can pick from HDMI, AV, among other ports in order show one of them on the screen
+x
+#CompOrgInRealLife Planning a weekend trip is like boolean algebra. I can visit (Tampa AND Clearwater) XOR (Jacksonville AND St. Augustine) XOR (Disney OR Universal Studios)
+x
+Ordering at a restaurant is a logic function, I could order: Appetizer OR Dinner OR Dessert. #CompOrgInRealLife
+x
+Maintaining a good work-life balance is like an XOR gate- you can spend time doing work or spend time on your personal life, but not both simultaneously. #CompOrgInRealLife
+x
+If the driver is a visitor OR has a guest access code, then the driver must go to the visitor entrance of the complex, if any are true, in order to enter the building.
+x
