@@ -39,13 +39,16 @@ class TwitterAPI:
                 subject = Subject.objects.get(name=subject_name)
                 
                 description = parsed_data['full_text']        
-                reflection = Reflection(id=parsed_data['id_str'],
+                reflection = Reflection(tweet_id=parsed_data['id_str'],
                                         student_id=parsed_data['user']['id_str'],
                                         student_handle=parsed_data['user']['screen_name'],
                                         date=DateParser.parse(parsed_data['created_at']),
                                         description=description,
                                         subject=subject);
-                reflection.save()
+                try:
+                    reflection.save()
+                except:
+                    print("Failed");
             f.close()
     
         else:
@@ -58,8 +61,8 @@ class TwitterAPI:
                 print(subject_reflections)
 
                 if subject_reflections.__len__() > 0:
-                    last_tweet_id = subject_reflections.latest(field_name='id')
-                    tweets = tweepy.Cursor(api.search, since_id=last_tweet_id, tweet_mode="extended", q=hashTag, lang='en').items(100)
+                    last_tweet_id = subject_reflections.latest(field_name='tweet_id')
+                    tweets = tweepy.Cursor(api.search, since_id=last_tweet_id, tweet_mode="extended", q=hashTag, lang='en').items(200)
                     print(last_tweet_id)
                 else:
                     print('Nothing found, downloading last 200')
@@ -73,13 +76,16 @@ class TwitterAPI:
 
                     # print(hashTag + parsed_data['id_str']);
                     description = parsed_data['full_text']        #We need to clean it afterwards
-                    reflection = Reflection(id=parsed_data['id_str'],
+                    reflection = Reflection(tweet_id=parsed_data['id_str'],
                                             student_id=parsed_data['user']['id_str'],
                                             student_handle=parsed_data['user']['screen_name'],
                                             date=DateParser.parse(parsed_data['created_at']),
                                             description=description,
                                             subject=subject);
-                    reflection.save()
+                    try:
+                        reflection.save()
+                    except:
+                        print("Failed");
 
 # #sample json format of tweet
 # {
