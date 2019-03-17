@@ -2,6 +2,7 @@ from reflections.models import Reflection, Subject
 from dateutil import parser as DateParser
 
 import tweepy
+import json
 
 hashTagDict = {
     '#DataStructuresInRealLife': 'Data Structures',
@@ -14,6 +15,7 @@ ACCESS_SECRET = 'DYGFBHsgaQtKfCHky8ka6ycZxsvLGSoDtuA0iUnIDSGQT'
 CONSUMER_KEY = 'SC79UgCrSSxeV9mRDCvpfwBV2'
 CONSUMER_SECRET = 'vFvQ09eQ1LprniqXOqUBKCmZgjKbMo7nzsjyZFegebVFkjpqjt'
 
+manuallyAdding = False;
 
 class TwitterAPI:
 
@@ -22,30 +24,21 @@ class TwitterAPI:
         auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
         auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
         api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True, compression=True)
+        count = 0;
+        if(manuallyAdding):
+            
+            f = open("manualTweets.txt","r");
 
-        for hashTag in hashTagDict:
-            subject_name = hashTagDict[hashTag]
-            subject = Subject.objects.get(name=subject_name)
-            print(subject.id)
+            for line in f:
+                count = count + 1;
+                print(count);
 
-            subject_reflections = Reflection.objects.filter(subject=subject, is_pending=True)
-            print(subject_reflections)
-
-            if subject_reflections.__len__() > 0:
-                last_tweet_id = subject_reflections.latest(field_name='id')
-                tweets = tweepy.Cursor(api.search, since_id=last_tweet_id, tweet_mode="extended", q=hashTag, lang='en').items(100)
-                print(last_tweet_id)
-            else:
-                print('Nothing found, downloading last 200')
-                tweets = tweepy.Cursor(api.search, q=hashTag, tweet_mode="extended", lang='en').items(200)
-
-            for status in tweets:
-                parsed_data = status._json;
-
-                # print(status)
-
-                # print(hashTag + parsed_data['id_str']);
-                description = parsed_data['full_text']        #We need to clean it afterwards
+                parsed_data = json.loads(line);
+                subject_name = hashTagDict[parsed_data["subject"]]
+                
+                subject = Subject.objects.get(name=subject_name)
+                
+                description = parsed_data['full_text']        
                 reflection = Reflection(id=parsed_data['id_str'],
                                         student_id=parsed_data['user']['id_str'],
                                         student_handle=parsed_data['user']['screen_name'],
@@ -53,6 +46,40 @@ class TwitterAPI:
                                         description=description,
                                         subject=subject);
                 reflection.save()
+            f.close()
+    
+        else:
+            for hashTag in hashTagDict:
+                subject_name = hashTagDict[hashTag]
+                subject = Subject.objects.get(name=subject_name)
+                print(subject.id)
+
+                subject_reflections = Reflection.objects.filter(subject=subject, is_pending=True)
+                print(subject_reflections)
+
+                if subject_reflections.__len__() > 0:
+                    last_tweet_id = subject_reflections.latest(field_name='id')
+                    tweets = tweepy.Cursor(api.search, since_id=last_tweet_id, tweet_mode="extended", q=hashTag, lang='en').items(100)
+                    print(last_tweet_id)
+                else:
+                    print('Nothing found, downloading last 200')
+                    tweets = tweepy.Cursor(api.search, q=hashTag, tweet_mode="extended", lang='en').items(200)
+        
+
+                for status in tweets:
+                    parsed_data = status._json;
+
+                    # print(status)
+
+                    # print(hashTag + parsed_data['id_str']);
+                    description = parsed_data['full_text']        #We need to clean it afterwards
+                    reflection = Reflection(id=parsed_data['id_str'],
+                                            student_id=parsed_data['user']['id_str'],
+                                            student_handle=parsed_data['user']['screen_name'],
+                                            date=DateParser.parse(parsed_data['created_at']),
+                                            description=description,
+                                            subject=subject);
+                    reflection.save()
 
 # #sample json format of tweet
 # {
