@@ -35,7 +35,7 @@ class InAccuracyCategory(models.Model):
 
 class Reflection(models.Model):
     class Meta:
-        unique_together = (('id', 'student_id'),)
+        unique_together = (('id', 'student_id', 'subject'),)
 
     id = models.CharField(max_length=20, primary_key=True)
     student_id = models.CharField(max_length=50)
