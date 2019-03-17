@@ -15,7 +15,7 @@ ACCESS_SECRET = 'DYGFBHsgaQtKfCHky8ka6ycZxsvLGSoDtuA0iUnIDSGQT'
 CONSUMER_KEY = 'SC79UgCrSSxeV9mRDCvpfwBV2'
 CONSUMER_SECRET = 'vFvQ09eQ1LprniqXOqUBKCmZgjKbMo7nzsjyZFegebVFkjpqjt'
 
-manuallyAdding = False;
+manuallyAdding = True;
 
 class TwitterAPI:
 
