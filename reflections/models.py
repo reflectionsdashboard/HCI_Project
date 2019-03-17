@@ -37,7 +37,7 @@ class Reflection(models.Model):
     class Meta:
         unique_together = (('tweet_id', 'student_id', 'subject'),)
 
-    tweet_id = models.CharField(max_length=20)
+    tweet_id = models.CharField(max_length=50)
     student_id = models.CharField(max_length=50)
     student_handle = models.CharField(max_length=50)
     description = models.TextField(blank=True)
