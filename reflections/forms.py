@@ -17,3 +17,7 @@ class ReflectionForm(forms.ModelForm):
             'comments': forms.Textarea(attrs={'class': 'form-control', 'rows': 3,
                                               'placeholder': 'recommendations or comments'}),
         }
+
+class SubTopicForm(forms.Form):
+    subject = forms.CharField(label="subject",max_length=100);
+    topic = forms.CharField(label="topic",max_length=100);
