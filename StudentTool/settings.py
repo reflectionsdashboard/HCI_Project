@@ -34,12 +34,13 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1','limitless-tundra-70483.herokuapp.com/
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'accounts.apps.AccountsConfig',
+    'crispy_forms',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
-    'accounts',
     'reflections',
     'dashboard',
     'chartjs',
@@ -128,6 +129,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "assets"),

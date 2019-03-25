@@ -1,15 +1,15 @@
 {% extends "accounts/auth-base.html" %}
 {% load crispy_forms_tags %}
 {% block title %}
-    Sign Up
+    Sign In
 {% endblock %}
 {% block content %}
 
-    <form class="form-signup" action="{% url 'accounts:signup'  %}" method="post">
+    <form class="form-signin" action="{% url 'accounts:signin'  %}" method="post">
         {% csrf_token %}
     {{ form|crispy}}
         <h1 class="h3 mb-3 font-weight-normal">
-            Sign Up
+            Sign In
         </h1>
     {% for field in form %}
 
@@ -17,7 +17,6 @@
         {% if request.GET.next %}
             <input type="hidden" name="next" value="{{ request.GET.next }}">
         {% endif %}
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
-    <button type="button" class="btn btn-link"><a href="{% url "accounts:signin" %}">Already have an account? SignIn</a></button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
     </form>
 {% endblock %}

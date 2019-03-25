@@ -1,4 +1,5 @@
 {% extends "accounts/auth-base.html" %}
+{% load crispy_forms_tags %}
 {% block title %}
     Sign In
 {% endblock %}
@@ -6,11 +7,12 @@
 
     <form class="form-signin" action="{% url 'accounts:signin'  %}" method="post">
         {% csrf_token %}
+    {{ form|crispy}}
         <h1 class="h3 mb-3 font-weight-normal">
             Sign In
         </h1>
     {% for field in form %}
-        {{ field }}
+
     {% endfor %}
         {% if request.GET.next %}
             <input type="hidden" name="next" value="{{ request.GET.next }}">
