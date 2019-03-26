@@ -1,2 +1,256 @@
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 
+<script>
+
+    var recentChart;
+    var completeChart;
+    var barChart;
+
+    var selected_subject;
+
+$(document).ready(function() {
+
+    selected_subject = $("input[name='options']:checked").val();
+    callAjax()
+})
+
+$(document).on('change', 'input:radio[name="options"]', function (event) {
+    selected_subject = $("input[name='options']:checked").val();
+    callAjax()
+});
+
+function callAjax(){
+
+    //Recent Reflections Data
+    $.ajax({
+        data: { 'subject': selected_subject },
+        method: "GET",
+        url: "{%  url "dashboard:reflection-data"  %}",
+        success: function(data){
+            {#console.log(data)#}
+            {#let table = document.getElementById("reflections_table")#}
+            {#table.Data(data)#}
+            $('#reflections_table').empty();
+            $('#reflections_table').append(data)
+        },
+        error: function(error_data){
+
+            $('#reflections_table').empty();
+
+            console.log("error")
+            console.log(error_data)
+        }
+    })
+
+    //Get Legend
+    $.ajax({
+        data: { 'subject': selected_subject },
+        method: "GET",
+        url: "{%  url "dashboard:legend-data" %}",
+        success: function(data){
+            console.log(data)
+            {#let table = document.getElementById("reflections_table")#}
+            {#table.Data(data)#}
+            $('#legend').text(data)
+        },
+        error: function(error_data){
+
+            $('#legend').empty()
+
+            console.log("error")
+            console.log(error_data)
+        }
+    })
+
+    //Recent Chart Data
+    $.ajax({
+        data: { 'subject': selected_subject },
+        method: "GET",
+        url: "{%  url "dashboard:recent-chart-data" %}",
+        success: function(data){
+            setRecentChart(data)
+        },
+        error: function(error_data){
+
+            recentChart.destroy()
+
+            console.log("error")
+            console.log(error_data)
+        }
+    })
+
+    //Complete Chart Data
+    $.ajax({
+        data: { 'subject': selected_subject },
+        method: "GET",
+        url: "{% url "dashboard:complete-chart-data" %}",
+        success: function(data){
+            setCompleteChart(data)
+        },
+        error: function(error_data){
+
+            completeChart.destroy()
+
+            console.log("error")
+            console.log(error_data)
+        }
+    })
+
+    //Bar Chart Data
+    $.ajax({
+        data: { 'subject': selected_subject },
+        method: "GET",
+        url: "{% url "dashboard:bar-chart-data" %}",
+        success: function(data){
+            console.log(data)
+            setBarChart(data)
+        },
+        error: function(error_data){
+
+            barChart.destroy()
+
+            console.log("error")
+            console.log(error_data)
+        }
+    })
+
+}
+
+function setRecentChart(data){
+
+    if (completeChart)
+    {
+        completeChart.destroy()
+    }
+
+    let ctx = document.getElementById("recent_pie_chart").getContext('2d');
+    completeChart = new Chart(ctx, {
+        type: 'pie',
+        data: data,
+        options: {
+            responsive: true,
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Recent reflections accuracy'
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            },
+            tooltips: {
+              callbacks: {
+                label: function(tooltipItem, data) {
+                  //get the concerned dataset
+                  let dataset = data.datasets[tooltipItem.datasetIndex];
+                  let currentValue = dataset.data[tooltipItem.index];
+
+                  return currentValue + "%";
+                }
+              }
+            }
+        }
+    });
+}
+
+function setCompleteChart(data){
+
+    if(recentChart)
+    {
+        recentChart.destroy()
+    }
+
+    let ctx = document.getElementById("complete_pie_chart").getContext('2d');
+    recentChart = new Chart(ctx, {
+        type: 'pie',
+        data: data,
+        options: {
+            responsive: true,
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'All reflections accuracy'
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            },
+            tooltips: {
+              callbacks: {
+                label: function(tooltipItem, data) {
+                  //get the concerned dataset
+                  let dataset = data.datasets[tooltipItem.datasetIndex];
+                  let currentValue = dataset.data[tooltipItem.index];
+
+                  return currentValue + "%";
+                }
+              }
+            }
+        }
+    });
+}
+
+function setBarChart(data){
+
+     if(barChart)
+    {
+        barChart.destroy()
+    }
+
+    let ctx = document.getElementById("bar_chart").getContext('2d');
+    barChart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Accuracy by topic'
+            },
+            legend:{
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Topic'
+                        }
+                    }],
+                yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true,
+                            steps: 10,
+                            stepValue: 10,
+                            max: 100,callback: function(value) {
+                               return value + "%"
+                           }
+                        }
+                    }]
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            },
+            tooltips: {
+              callbacks: {
+                label: function(tooltipItem, data) {
+                  //get the concerned dataset
+                  let dataset = data.datasets[tooltipItem.datasetIndex];
+                  let currentValue = dataset.data[tooltipItem.index];
+
+                  return currentValue + "%";
+                }
+              }
+            }
+        }
+    });
+}
+
+</script>
