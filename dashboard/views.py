@@ -21,17 +21,11 @@ def get_reflection_data(request):
     subject_name = request.GET['subject']
     subject = Subject.objects.get(name=subject_name)
     reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject=subject).order_by('id')[:5][::-1]
-    return render(request, "dashboard/recent_reflections_table.html", {"reflections": reflections})
-
-
-def get_legend_data(request):
-    user_id = request.user
-    subject_name = request.GET['subject']
-    subject = Subject.objects.get(name=subject_name)
-    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject=subject).order_by('id')[:5][::-1]
+    total_reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject=subject).count()
     legend = return_topic_legend(reflections)
-    return HttpResponse(legend)
-
+    return render(request, "dashboard/recent_reflections_table.html", {"reflections": reflections,
+                                                                       "legend": legend,
+                                                                       "total_reflections": total_reflections})
 
 def get_recent_chart_data(request):
     user_id = request.user

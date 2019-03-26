@@ -42,26 +42,6 @@ function callAjax(){
         }
     })
 
-    //Get Legend
-    $.ajax({
-        data: { 'subject': selected_subject },
-        method: "GET",
-        url: "{%  url "dashboard:legend-data" %}",
-        success: function(data){
-            console.log(data)
-            {#let table = document.getElementById("reflections_table")#}
-            {#table.Data(data)#}
-            $('#legend').text(data)
-        },
-        error: function(error_data){
-
-            $('#legend').empty()
-
-            console.log("error")
-            console.log(error_data)
-        }
-    })
-
     //Recent Chart Data
     $.ajax({
         data: { 'subject': selected_subject },
