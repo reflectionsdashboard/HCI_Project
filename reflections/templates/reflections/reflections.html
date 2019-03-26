@@ -13,7 +13,7 @@
     <form action="{% url 'reflections:reflections'  %}" method="post">
       {% csrf_token %}
      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 ">
-        <h1 class="h2">Reflections</h1>
+        <h1 class="h2">Reflections</h1> 
           <div class="btn-group btn-group-toggle" >
               {% for subject in subjects %}
                 {% if subject.name == Subject %}
@@ -55,6 +55,7 @@
               </div>
           </form>
           {% endif %}
+
         </div>
 
   
@@ -62,7 +63,9 @@
 
         <div class="d-flex">
             <div class="reflections col-12 px-4 shadow p-3 mb-5">
-            <h2 class="text-center">Recent Reflections</h2>
+            <h2 class="text-center">Recent Reflections 
+              <button onclick="window.location.href='/dashboard'" class="shadow float-right btn btn-primary " >Dashboard</button></h2> 
+
             <div class="table-responsive">
         <table class="table">
           <tbody>

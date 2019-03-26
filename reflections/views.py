@@ -5,6 +5,8 @@ from .forms import SubTopicForm
 
 import json
 
+from django.contrib.auth.models import User
+
 
 # Create your views here.
 
@@ -22,6 +24,13 @@ subject_topics = {}
 
 def show_reflections_view(request):
 
+	user_id = request.user
+	user = User.objects.get(username=user_id)
+	print(user_id);
+	first_name = user.first_name
+	last_name = user.last_name
+	student_name = first_name + " " + last_name
+
 	if request.method == 'POST':
 		form = SubTopicForm(request.POST)
 		if form.is_valid():
@@ -31,11 +40,11 @@ def show_reflections_view(request):
 			# print(chosenSubject);
 			if chosenTopic == "NULL":
 				sub = Subject.objects.get(name=chosenSubject);
-				reflections = Reflection.objects.filter(is_pending=False, subject=sub).order_by('date')[:5][::-1]
+				reflections = Reflection.objects.filter(is_pending=False, student_handle=user_id, subject=sub).order_by('date')[:5][::-1]
 			else:
 				sub = Subject.objects.get(name=chosenSubject);
 				top = Topic.objects.get(name=chosenTopic);
-				reflections = Reflection.objects.filter(is_pending=False, subject=sub, topic=top).order_by('date')[:5][::-1]
+				reflections = Reflection.objects.filter(is_pending=False, student_handle=user_id, subject=sub, topic=top).order_by('date')[:5][::-1]
 			
 			subject_topics = return_subject_topic(Reflection.objects.filter(is_pending=False).order_by('date')[:5][::-1])
 
@@ -51,13 +60,13 @@ def show_reflections_view(request):
 						topics.append(top);
 
 			return render(request, "reflections/reflections.html", {"reflections": reflections, "subjects": subjects, "topics":topics,
-    			"Subject": chosenSubject, "Topic":chosenTopic})
+    			"Subject": chosenSubject, "Topic":chosenTopic, 'student_name': student_name})
 	
 
 	chosenSubject = "NULL"
 	chosenTopic = "NULL"
 
-	reflections = Reflection.objects.filter(is_pending=False).order_by('date')[:5][::-1]
+	reflections = Reflection.objects.filter(is_pending=False, student_handle=user_id).order_by('date')[:5][::-1]
 	subject_topics = return_subject_topic(reflections)
 	subjects = []
 	topics = []
@@ -67,7 +76,7 @@ def show_reflections_view(request):
 		subjects.append(sub);
 
 	return render(request, "reflections/reflections.html", {"reflections": reflections, "subjects": subjects, "topics":topics,
-    	"Subject": chosenSubject, "Topic":chosenTopic})
+    	"Subject": chosenSubject, "Topic":chosenTopic, 'student_name': student_name})
 
 def return_subject_topic(reflections):
 	SubTop = {};
