@@ -16,10 +16,12 @@
 
     <link href="{% static "stylesheets/signin.css" %}" rel="stylesheet">
     <link href="{% static "stylesheets/signup.css" %}" rel="stylesheet">
-
 </head>
 <body class="text-center">
         {% block content %}
         {%  endblock %}
+
+        {% block alert %}
+        {% endblock %}
 </body>
 </html>

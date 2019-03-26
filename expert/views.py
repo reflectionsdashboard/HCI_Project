@@ -3,7 +3,10 @@ from reflections.models import Reflection
 from reflections.forms import ReflectionForm
 from django.forms import modelformset_factory
 from expert.twitter import TwitterAPI
+from django.contrib.admin.views.decorators import staff_member_required
 
+
+@staff_member_required(login_url="/accounts/signin")
 def show_expert_view(request):
     TwitterAPI.get_tweets()
 

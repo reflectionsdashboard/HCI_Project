@@ -1,11 +1,19 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
+from django.contrib.auth.decorators import login_required
 from reflections.models import *
 from collections import defaultdict
+from django.contrib.auth.models import User
 
 
+@login_required(login_url="/accounts/signin")
 def show_dashboard(request):
-    return render(request, "dashboard/dashboard.html")
+    user_id = request.user
+    user = User.objects.get(username=user_id)
+    first_name = user.first_name
+    last_name = user.last_name
+    student_name = first_name + " " + last_name
+    return render(request, "dashboard/dashboard.html", {'student_name': student_name})
 
 
 def get_reflection_data(request):
