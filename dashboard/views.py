@@ -17,39 +17,44 @@ def show_dashboard(request):
 
 
 def get_reflection_data(request):
+    user_id = request.user
     subject_name = request.GET['subject']
     subject = Subject.objects.get(name=subject_name)
-    reflections = Reflection.objects.filter(is_pending=False, subject=subject).order_by('id')[:5][::-1]
+    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject=subject).order_by('id')[:5][::-1]
     return render(request, "dashboard/recent_reflections_table.html", {"reflections": reflections})
 
 
 def get_legend_data(request):
+    user_id = request.user
     subject_name = request.GET['subject']
     subject = Subject.objects.get(name=subject_name)
-    reflections = Reflection.objects.filter(is_pending=False, subject=subject).order_by('id')[:5][::-1]
+    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject=subject).order_by('id')[:5][::-1]
     legend = return_topic_legend(reflections)
     return HttpResponse(legend)
 
 
 def get_recent_chart_data(request):
+    user_id = request.user
     subject_name = request.GET['subject']
     subject = Subject.objects.get(name=subject_name)
-    reflections = Reflection.objects.filter(is_pending=False, subject=subject).order_by('id')[:5][::-1]
+    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject=subject).order_by('id')[:5][::-1]
     chart_data = return_pie_chart_json(reflections)
     return JsonResponse(chart_data, safe=False)
 
 
 def get_complete_chart_data(request):
+    user_id = request.user
     subject_name = request.GET['subject']
     subject = Subject.objects.get(name=subject_name)
-    reflections = Reflection.objects.filter(is_pending=False, subject=subject).order_by('id')
+    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject=subject).order_by('id')
     chart_data = return_pie_chart_json(reflections)
     return JsonResponse(chart_data, safe=False)
 
 
 def get_bar_chart_data(request):
+    user_id = request.user
     subject_name = request.GET['subject']
-    chart_data = return_bar_chart_json(subject_name)
+    chart_data = return_bar_chart_json(user_id, subject_name)
     return JsonResponse(chart_data, safe=False)
 
 
@@ -114,10 +119,10 @@ def return_pie_chart_json(reflections):
     return json
 
 
-def return_bar_chart_json(subject_name):
+def return_bar_chart_json(user_id, subject_name):
     subject = Subject.objects.get(name=subject_name)
     topics = Topic.objects.filter(subject_id=subject).order_by('name')
-    reflections = Reflection.objects.filter(is_pending=False, subject=subject)
+    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject=subject)
 
     labels = []
     values = []

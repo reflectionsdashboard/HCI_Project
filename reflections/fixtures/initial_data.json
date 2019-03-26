@@ -53,6 +53,38 @@
       "name": "Assembly Language Programming"
     }
   },
+   {
+    "model": "reflections.Topic",
+    "fields": {
+      "subject_id": 2,
+      "id": "LDS",
+      "name": "Linear Data Structures"
+    }
+  },
+   {
+    "model": "reflections.Topic",
+    "fields": {
+      "subject_id": 2,
+      "id": "T",
+      "name": "Trees"
+    }
+  },
+   {
+    "model": "reflections.Topic",
+    "fields": {
+      "subject_id": 2,
+      "id": "G",
+      "name": "Graphs"
+    }
+  },
+   {
+    "model": "reflections.Topic",
+    "fields": {
+      "subject_id": 2,
+      "id": "S",
+      "name": "Sorting"
+    }
+  },
   {
     "model": "reflections.InAccuracyCategory",
     "fields": {
