@@ -1,0 +1,26 @@
+<thead>
+    <tr>
+      <th style="width: 80%">Reflection</th>
+        <th class="text-center">Topic</th>
+      <th class="text-center">Accurate</th>
+    </tr>
+</thead>
+<tbody>
+{% for reflection in reflections %}
+  <tr>
+      <td class="text-justify">
+          {{ reflection.formatted_description }}
+          {% if reflection.comments|length > 0 %}
+          <br>
+          <b>Expert Comments: </b>{{ reflection.comments}}
+          {% endif %}
+      </td>
+      {% if reflection.topic == None %}
+          <td>-</td>
+      {% else %}
+          <td>{{ reflection.topic_id }}</td>
+      {% endif %}
+  <td>{{ reflection.accuracy_percentage }}%</td>
+</tr>
+{% endfor %}
+</tbody>

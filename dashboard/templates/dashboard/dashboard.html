@@ -11,12 +11,12 @@
 {% block content %}
      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Dashboard</h1>
-          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <div class="btn-group btn-group-toggle" data-toggle="buttons" id="subject_switch">
           <label class="btn btn-primary active">
-            <input type="radio" name="options" id="option1" autocomplete="off" checked> Computer Organization
+            <input type="radio" name="options" id="option1" autocomplete="off" value= "Computer Organization" checked> Computer Organization
           </label>
           <label class="btn btn-primary">
-            <input type="radio" name="options" id="option2" autocomplete="off"> Data Structures
+            <input type="radio" name="options" id="option2" autocomplete="off" value= "Data Structures" > Data Structures
           </label>
         </div>
       </div>
@@ -24,49 +24,24 @@
             <div class="reflections col-6 px-4 shadow p-3 mb-5">
             <h2 class="text-center">Recent Reflections</h2>
             <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th style="width: 80%">Reflection</th>
-                <th class="text-center">Topic</th>
-              <th class="text-center">Accurate</th>
-            </tr>
-          </thead>
-          <tbody>
-          {% for reflection in reflections %}
-              <tr>
-                  <td class="text-justify">
-                      {{ reflection.formatted_description }}
-                      {% if reflection.comments|length > 0 %}
-                      <br>
-                      <b>Expert Comments: </b>{{ reflection.comments}}
-                      {% endif %}
-                  </td>
-                  {% if reflection.topic == None %}
-                      <td>-</td>
-                  {% else %}
-                      <td>{{ reflection.topic_id }}</td>
-                  {% endif %}
-              <td>{{ reflection.accuracy_percentage }}%</td>
-            </tr>
-          {% endfor %}
-          </tbody>
-        </table>
-            <div class="text-center font-weight-light font-italic">{{ legend }}</div>
-      </div>
+                <table id="reflections_table" class="table">
+
+                </table>
+                <div id="legend" class="text-center font-weight-light font-italic"></div>
+            </div>
+            </div>
+            <div class="col-6">
+                <div class="row1 m-2">
+                    <canvas id="recent_pie_chart"></canvas>
+                </div>
+                <div class="row2 m-2">
+                    <canvas id="complete_pie_chart"></canvas>
+                </div>
+            </div>
         </div>
-            <div class="col vertical-center">
-                <canvas id="accuracy_chart"></canvas>
-                <script>
-                    var chartData = {{ chart_data|safe }}
-                        console.log(chartData)
-                    var ctx = document.getElementById("accuracy_chart").getContext('2d');
-                    var myChart = new Chart(ctx, {
-                        type: 'pie',
-                        data: chartData,
-                        options: { }
-                });
-                </script>
+        <div class="d-flex">
+            <div class="col mb-5">
+                <canvas id="bar_chart"></canvas>
             </div>
         </div>
 {% endblock %}
