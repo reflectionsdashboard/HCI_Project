@@ -1,0 +1,22 @@
+<thead>
+    <tr>
+    <th>Tweet</th>
+    <th>Topic</th>
+    <th>Accuracy</th>
+    <th>Inaccuracy</th>
+    <th>Time</th>
+    <th>Comments</th>
+  </tr>
+</thead>
+<tbody>
+  {% for reflection in reflections %}
+      <tr>
+        <td style="width: 40%" class="text-justify">{{reflection.formatted_description }}</td>
+        <td style="width: 5%">{{ reflection.topic.name }}</td>
+        <td style="width: 5%">{{ reflection.accuracy_percentage }}%</td>
+        <td style="width: 10%">{{ reflection.inaccuracy_category}}</td>
+        <td style="width: 10%">{{ reflection.date}}</td>
+        <td style="width: 15%" class="text-justify">{{ reflection.comments}}</td>
+     </tr>
+   {% endfor %}
+</tbody>

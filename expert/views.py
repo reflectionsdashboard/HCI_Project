@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.forms import modelformset_factory
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from reflections.models import Reflection
+from reflections.models import Reflection, Topic
 from reflections.forms import ReflectionForm
 from expert.twitter import TwitterAPI
 
@@ -42,7 +42,7 @@ def show_expert_view(request):
                 context = {'reflections': objects, 'formset': form_set, 'student_name': 'Expert'}
                 return render(request, 'expert/expert_page.html', context)
     else:
-        # TwitterAPI.get_tweets()
+        TwitterAPI.get_tweets()
         form_set = reflection_form_set(queryset=page_query)
         context = {'reflections': objects, 'formset': form_set, 'student_name': 'Expert'}
         return render(request, 'expert/expert_page.html', context)

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from reflections.models import *
 from collections import defaultdict
@@ -26,6 +26,7 @@ def get_reflection_data(request):
     return render(request, "dashboard/recent_reflections_table.html", {"reflections": reflections,
                                                                        "legend": legend,
                                                                        "total_reflections": total_reflections})
+
 
 def get_recent_chart_data(request):
     user_id = request.user

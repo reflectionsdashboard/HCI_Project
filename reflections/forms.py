@@ -1,10 +1,10 @@
 from django import forms
-from . import models
+from .models import Topic, Reflection
 
 
 class ReflectionForm(forms.ModelForm):
     class Meta:
-        model = models.Reflection
+        model = Reflection
         fields = ['id', 'description', 'subject', 'topic', 'accuracy', 'inaccuracy_category', 'comments']
         widgets = {
             'id': forms.HiddenInput(attrs={'readonly': 'true'}),
@@ -18,6 +18,7 @@ class ReflectionForm(forms.ModelForm):
                                               'placeholder': 'recommendations or comments'}),
         }
 
-class SubTopicForm(forms.Form):
-    subject = forms.CharField(label="subject",max_length=100);
-    topic = forms.CharField(label="topic",max_length=100);
+    def __init__(self, *args, **kwargs):
+        super(ReflectionForm, self).__init__(*args, **kwargs)
+        subject = self.initial.get('subject')
+        self.fields['topic'].queryset = Topic.objects.filter(subject_id=subject)

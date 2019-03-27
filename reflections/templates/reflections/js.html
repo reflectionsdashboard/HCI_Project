@@ -1,2 +1,128 @@
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 
+<script>
+var selected_subject;
+var selected_topic;
+
+$(document).ready(function() {
+
+    selected_subject = 0;
+    selected_topic = 0;
+
+    getReflectionsData()
+    getSubjectsData()
+    getTopicsData()
+})
+
+$(document).on('change', 'input:radio[name="options"]', function (event) {
+    selected_subject = $("input[name='options']:checked").val();
+    getReflectionsData()
+});
+
+function getReflectionsData(){
+
+    $.ajax({
+        data: {'subject': selected_subject,
+                'topic': selected_topic },
+        method: "GET",
+        url: "{%  url "reflections:reflection-data"  %}",
+        success: function(data){
+            setReflectionTable(data)
+        },
+        error: function(error_data){
+
+            $('#reflections_table').empty();
+            console.log("error")
+            console.log(error_data)
+        }
+    })
+}
+
+function getSubjectsData(){
+
+    $.ajax({
+        method: "GET",
+        url: "{%  url "reflections:subject-data"  %}",
+        success: function(data){
+            setSubjectMenu(data)
+        },
+        error: function(error_data){
+
+            console.log("error")
+            console.log(error_data)
+        }
+    })
+}
+
+function getTopicsData(){
+
+    $.ajax({
+        data: {'subject': selected_subject},
+        method: "GET",
+        url: "{%  url "reflections:topic-data"  %}",
+        success: function(data){
+            setTopicMenu(data)
+        },
+        error: function(error_data){
+
+            console.log("error")
+            console.log(error_data)
+        }
+    })
+}
+
+function setReflectionTable(data){
+
+    $('#reflections_table').empty();
+    $('#reflections_table').append(data)
+}
+
+function setSubjectMenu(data){
+
+    console.log(data)
+    if (selected_subject == 0){
+        $('#subject_list').append('<button class="dropdown-item active" type="button" value=0>All</button>')
+    }
+    else
+    {
+        $('#subject_list').append('<button class="dropdown-item" type="button" value=0>All</button>')
+    }
+
+    for(index in data){
+
+        if (selected_subject == data[index].id){
+
+            $('#subject_list').append('<button class="dropdown-item active" type="button" value="+data[index].id+">'+data[index].name+'</button>')
+        }
+        else
+        {
+            $('#subject_list').append('<button class="dropdown-item" type="button" value="+data[index].id+">'+data[index].name+'</button>')
+        }
+    }
+}
+
+function setTopicMenu(data){
+
+    console.log(data)
+
+    if (selected_topic == 0){
+        $('#topic_list').append('<button class="dropdown-item active" type="button" value=0>All</button>')
+    }
+    else
+    {
+        $('#topic_list').append('<button class="dropdown-item" type="button" value=0>All</button>')
+    }
+
+    for(index in data){
+
+        if (selected_topic == data[index].id){
+            $('#topic_list').append('<button class="dropdown-item active" type="button" value="+data[index].id+">'+data[index].name+'</button>')
+        }
+        else
+        {
+            $('#topic_list').append('<button class="dropdown-item" type="button" value="+data[index].id+">'+data[index].name+'</button>')
+        }
+    }
+}
+
+</script>

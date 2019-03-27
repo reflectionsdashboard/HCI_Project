@@ -58,9 +58,8 @@ body {
     padding: 10px;
 }
 
-.reflections .table th, .table td {
+.reflections .table th, .reflections .table td {
      border-top: none !important;
-
  }
 
 .btn-group .btn.btn-primary.active {
@@ -70,10 +69,10 @@ body {
 
 .btn-group .btn.btn-primary {
   background: dimgray;
-    border-color: transparent;
+  border-color: transparent;
 }
 
-.table thead th{
+.reflections .table thead th{
   border-color: transparent;
 }
 

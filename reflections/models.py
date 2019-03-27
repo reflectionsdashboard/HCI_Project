@@ -19,7 +19,8 @@ class Topic(models.Model):
     name = models.TextField()
 
     def __str__(self):
-        return self.subject_id.name + ": " + self.name + '(' + self.id + ')'
+        return self.name
+        # return self.subject_id.name + ": " + self.name + '(' + self.id + ')'
 
     def mapping(self):
         return self.id + "-" + self.name
