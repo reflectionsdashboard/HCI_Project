@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.forms import modelformset_factory
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from reflections.models import Reflection, Topic
+from reflections.models import Reflection
 from reflections.forms import ReflectionForm
 from expert.twitter import TwitterAPI
 
@@ -24,23 +24,25 @@ def show_expert_view(request):
 
     if request.method == 'POST':
         form_set = reflection_form_set(request.POST, queryset=page_query)
-        for reflection_form in form_set:
-            if reflection_form.is_valid() and reflection_form.has_changed():
-                reflection = reflection_form.save(commit=False)
-                if 'description' in reflection_form.changed_data:
-                    reflection_form.changed_data.remove('description')
+        for form in form_set:
+            if form.is_valid() and form.has_changed():
+                reflection = form.save(commit=False)
+                if 'description' in form.changed_data:
+                    form.changed_data.remove('description')
 
-                if len(reflection_form.changed_data) > 0 and reflection.accuracy is not None:
+                if len(form.changed_data) > 0 and reflection.accuracy is not None:
                     print("---------PRINT----------")
-                    print(reflection_form.changed_data)
+                    print(form.changed_data)
                     print(reflection)
 
                     reflection.is_pending = False
-                    reflection_form.save()
-                return HttpResponseRedirect('/expert')
+                    form.save()
+
             else:
                 context = {'reflections': objects, 'formset': form_set, 'student_name': 'Expert'}
                 return render(request, 'expert/expert_page.html', context)
+
+        return HttpResponseRedirect('/expert')
     else:
         TwitterAPI.get_tweets()
         form_set = reflection_form_set(queryset=page_query)

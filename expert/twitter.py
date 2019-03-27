@@ -16,7 +16,7 @@ CONSUMER_KEY = 'SC79UgCrSSxeV9mRDCvpfwBV2'
 CONSUMER_SECRET = 'vFvQ09eQ1LprniqXOqUBKCmZgjKbMo7nzsjyZFegebVFkjpqjt'
 
 #Do not change this unless you know it
-manuallyAdding = False; 
+manuallyAdding = False;
 
 
 class TwitterAPI:
@@ -34,7 +34,7 @@ class TwitterAPI:
 
             for line in f:
                 count = count + 1;
-                print(count);
+                # print(count);
 
                 parsed_data = json.loads(line);
                 subject_name = hashTagDict[parsed_data["subject"]]
@@ -58,10 +58,10 @@ class TwitterAPI:
             for hashTag in hashTagDict:
                 subject_name = hashTagDict[hashTag]
                 subject = Subject.objects.get(name=subject_name)
-                print(subject.id)
+                # print(subject.id)
 
                 subject_reflections = Reflection.objects.filter(subject=subject, is_pending=True)
-                print(subject_reflections)
+                # print(subject_reflections)
 
                 if subject_reflections.__len__() > 0:
                     last_tweet_id = subject_reflections.latest(field_name='tweet_id')

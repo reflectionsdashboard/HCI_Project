@@ -19,6 +19,13 @@ $(document).on('change', 'input:radio[name="options"]', function (event) {
     getReflectionsData()
 });
 
+$('#dropdown').click(function () {
+    if($(this).hasClass('open')) {
+        alert('it works');
+    }
+});
+
+
 function getReflectionsData(){
 
     $.ajax({
@@ -81,22 +88,22 @@ function setSubjectMenu(data){
 
     console.log(data)
     if (selected_subject == 0){
-        $('#subject_list').append('<button class="dropdown-item active" type="button" value=0>All</button>')
+        $('#subject_list').append('<button class="dropdown-item active" type="button" value=0 id="submit-action">All</button>')
     }
     else
     {
-        $('#subject_list').append('<button class="dropdown-item" type="button" value=0>All</button>')
+        $('#subject_list').append('<button class="dropdown-item" type="button" value=0 id="submit-action">All</button>')
     }
 
     for(index in data){
 
         if (selected_subject == data[index].id){
 
-            $('#subject_list').append('<button class="dropdown-item active" type="button" value="+data[index].id+">'+data[index].name+'</button>')
+            $('#subject_list').append('<button class="dropdown-item active" type="button" value="+data[index].id+" id="submit-action">'+data[index].name+'</button>')
         }
         else
         {
-            $('#subject_list').append('<button class="dropdown-item" type="button" value="+data[index].id+">'+data[index].name+'</button>')
+            $('#subject_list').append('<button class="dropdown-item" type="button" value="+data[index].id+" id="submit-action">'+data[index].name+'</button>')
         }
     }
 }
