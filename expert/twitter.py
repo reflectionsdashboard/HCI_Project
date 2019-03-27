@@ -18,6 +18,7 @@ CONSUMER_SECRET = 'vFvQ09eQ1LprniqXOqUBKCmZgjKbMo7nzsjyZFegebVFkjpqjt'
 #Do not change this unless you know it
 manuallyAdding = False; 
 
+
 class TwitterAPI:
 
     @staticmethod
@@ -26,7 +27,8 @@ class TwitterAPI:
         auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
         api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True, compression=True)
         count = 0;
-        if(manuallyAdding):
+
+        if manuallyAdding:
             
             f = open("manualTweets.txt","r");
 

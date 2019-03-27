@@ -6,3 +6,9 @@ textarea{
     border-right-width: 0px !important;
     resize: none;
 }
+
+.top-alert {
+  position: fixed;
+  top: 0;
+  z-index: 99999;
+}

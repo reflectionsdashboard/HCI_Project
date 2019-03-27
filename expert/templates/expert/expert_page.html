@@ -12,7 +12,7 @@
             <h1 class="h2">Student Reflections</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <button type="button" class="btn btn-info mr-2" onclick="window.location.href = './'" >Download</button>
-        {% if reflection_form_set %}
+        {% if reflections %}
         <button type="submit" class="btn btn-primary" form="reflectionForm" >Submit</button>
         {% else %}
         <button type="submit" class="btn btn-primary" form="reflectionForm" disabled>Submit</button>
@@ -21,13 +21,11 @@
 
     </div>
 
-    {% if reflection_form_set %}
-    <form id="reflectionForm" action="{% url 'expert:submit' %}" method="post" enctype="multipart/form-data">
+    {% if reflections %}
+    <form id="reflectionForm" action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-    {{ reflection_form_set.management_form }}
-        {% for form in reflection_form_set %}
-{#            <div class="row mb-3">#}
-{#            {% for form in forms %}#}
+    {{ formset.management_form }}
+        {% for form in formset %}
             {{ form.id }}
             {{ form.description }}
             {{ form.subject }}
@@ -57,12 +55,64 @@
                 </div>
             {% endfor %}
             </div>
-{#        {% endfor %}#}
     </form>
-    {% else %}
-        <div class="d-flex">
-            <span class="align-middle">No reflections to show</span>
-        </div>
-    {% endif %}
 
+        <nav aria-label="...">
+          <ul class="pagination justify-content-center">
+                {% if reflections.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ reflections.previous_page_number }}" tabindex="-1">Previous</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                {% endif %}
+            </li>
+            {% for i in reflections.paginator.page_range %}
+               {% if i <= reflections.number|add:1 and i >= reflections.number|add:-1 %}
+                    {% if reflections.number == i %}
+                        <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a></li>
+                    {% endif %}
+               {% endif %}
+            {% endfor %}
+            {% if reflections.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ reflections.next_page_number }}" tabindex="-1">Next</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Next</a>
+                </li>
+            {% endif %}
+          </ul>
+        </nav>
+    {% else %}
+        <p>No reflections to show.</p>
+    {% endif %}
+{% endblock %}
+
+{% block alert %}
+{% for form in formset %}
+    {% if form.errors %}
+    <div class="fixed-top ml-1 mr-1">
+    {% for field in form %}
+        {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert"> x </button>
+                    {{ field.name|capfirst }} : {{ error|escape }}
+                </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert"> x </button>
+            {{ error|escape }}
+        </div>
+    {% endfor %}
+    </div>
+    {% endif %}
+{% endfor %}
 {% endblock %}
