@@ -62,43 +62,49 @@
 
 
         <div class="d-flex">
-            <div class="reflections col-12 px-4 shadow p-3 mb-5">
-            <h2 class="text-center">Recent Reflections 
-              <button onclick="window.location.href='/dashboard'" class="shadow float-right btn btn-primary " >Dashboard</button></h2> 
+            <div class=" col-12 px-4 p-3 mb-5">
+            
+              <button onclick="window.location.href='/dashboard'" class="btn-link  mb-3" >Go To Dashboard</button>
 
-            <div class="table-responsive">
-        <table class="table">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Tweet</th>
+              <th>Subject</th>
+              <th>Topic</th> 
+              
+              <th>Accurate</th>
+              <th>Inaccurate Category</th>
+
+              <th>Time</th>
+              <th>Expert Comment</th>
+            </th>
+          </thead>
           <tbody>
-          {% for reflection in reflections %}
-              <tr>
-                  <td class="text-justify">
-                    <div class="p-2 mb-2">
-                      <b>Reflections: </b>{{ reflection.formatted_description }}
-                    </div>
-                      <table class="table shadow reflections">
-                        <td style="width: 40%"><b> Expert Comments: </b>
-                        {% if reflection.comments|length > 0 %}
-                          {{ reflection.comments}}</td>
+            <tr>
+              {% for reflection in reflections %}
+                <th style="width: 5%">{{forloop.counter}}</th>
+                <th style="width: 40%">{{reflection.formatted_description }}</th>
+                <th style="width: 10%">{{ reflection.subject }}</th>
+                <th style="width: 5%">{% if reflection.topic == None %}
+                      -
+                    {% else %}
+                        {{ reflection.topic_id }}
+                    {% endif %}</th>
+                <th style="width: 5%">{{ reflection.accuracy_percentage }}%</th>
+                <th style="width: 10%">{{ reflection.inaccuracy_category}}</th>
+                <th style="width: 10%">{{ reflection.date}}</th>
+                <th style="width: 15%">{% if reflection.comments|length > 0 %}
+                          {{ reflection.comments}}
                         {% else %}
-                          <td>-</td>
-                        {% endif %}
-                        <td style="width: 15%"><b>Subject: <br></b>{{ reflection.subject }}</td>
-                        <td style="width: 15%"><b>Topic: <br></b>{% if reflection.topic == None %}
                           -
-                          {% else %}
-                              {{ reflection.topic_id }}
-                          {% endif %}
-                        </td>
-
-                        <td style="width: 5%"><b>Accurate: <br></b>{{ reflection.accuracy_percentage }}%</td>
-                        <td style="width: 5%"><b>Inaccuracy: </b>{{ reflection.inaccuracy_category}}</td>
-                        <td style="width: 20%" ><b>Time: <br></b>{{ reflection.date}}</td></table>
-                  </td>
-            </tr>
-          {% endfor %}
+                        {% endif %}</th>
+             </tr>
+           {% endfor %}
           </tbody>
         </table>
-      </div>
+
         </div>
       </div>
 {% endblock %}
