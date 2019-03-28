@@ -6,25 +6,33 @@ var selected_topic;
 
 $(document).ready(function() {
 
-    selected_subject = 0;
+    selected_subject = localStorage.getItem("subject_id");
+
+    if (selected_subject == undefined){
+        selected_subject = 0;
+    }
+
     selected_topic = 0;
 
     getReflectionsData()
-    getSubjectsData()
-    getTopicsData()
+
+    $("body").on('click', '.dropdown-menu.dropdown-menu-right button', function () {
+
+        var type = $(this).data("type");
+
+        if (type == "subject"){
+            selected_subject = $(this).data("id");
+            selected_topic = 0;
+        }
+        else if(type == "topic"){
+            selected_topic = $(this).data("id");
+        }
+
+        getReflectionsData()
+
+        console.log(selected_subject)
+    });
 })
-
-$(document).on('change', 'input:radio[name="options"]', function (event) {
-    selected_subject = $("input[name='options']:checked").val();
-    getReflectionsData()
-});
-
-$('#dropdown').click(function () {
-    if($(this).hasClass('open')) {
-        alert('it works');
-    }
-});
-
 
 function getReflectionsData(){
 
@@ -43,6 +51,9 @@ function getReflectionsData(){
             console.log(error_data)
         }
     })
+
+    getSubjectsData()
+    getTopicsData()
 }
 
 function getSubjectsData(){
@@ -86,48 +97,56 @@ function setReflectionTable(data){
 
 function setSubjectMenu(data){
 
-    console.log(data)
+    {#console.log(data)#}
+
+    $('#subject_list').empty()
+
     if (selected_subject == 0){
-        $('#subject_list').append('<button class="dropdown-item active" type="button" value=0 id="submit-action">All</button>')
+
+        $('#subject_list').append('<button class="dropdown-item active" type="button" data-id=0 data-type="subject">All</button>')
     }
     else
     {
-        $('#subject_list').append('<button class="dropdown-item" type="button" value=0 id="submit-action">All</button>')
+        $('#subject_list').append('<button class="dropdown-item" type="button" data-id=0 data-type="subject">All</button>')
     }
 
     for(index in data){
 
         if (selected_subject == data[index].id){
 
-            $('#subject_list').append('<button class="dropdown-item active" type="button" value="+data[index].id+" id="submit-action">'+data[index].name+'</button>')
+            $('#subject_list').append('<button class="dropdown-item active" type="button" data-id="'+data[index].id+'" data-type="subject">'+data[index].name+'</button>')
         }
         else
         {
-            $('#subject_list').append('<button class="dropdown-item" type="button" value="+data[index].id+" id="submit-action">'+data[index].name+'</button>')
+            $('#subject_list').append('<button class="dropdown-item" type="button" data-id="'+data[index].id+'" data-type="subject">'+data[index].name+'</button>')
         }
     }
 }
 
 function setTopicMenu(data){
 
-    console.log(data)
+    {#console.log(data)#}
+
+    $('#topic_list').empty()
 
     if (selected_topic == 0){
-        $('#topic_list').append('<button class="dropdown-item active" type="button" value=0>All</button>')
+
+        $('#topic_list').append('<button class="dropdown-item active" type="button" data-id=0 data-type="topic">All</button>')
     }
     else
     {
-        $('#topic_list').append('<button class="dropdown-item" type="button" value=0>All</button>')
+        $('#topic_list').append('<button class="dropdown-item" type="button" data-id=0 data-type="topic">All</button>')
     }
 
     for(index in data){
 
         if (selected_topic == data[index].id){
-            $('#topic_list').append('<button class="dropdown-item active" type="button" value="+data[index].id+">'+data[index].name+'</button>')
+
+            $('#topic_list').append('<button class="dropdown-item active" type="button" data-id="'+data[index].id+'" data-type="topic">'+data[index].name+'</button>')
         }
         else
         {
-            $('#topic_list').append('<button class="dropdown-item" type="button" value="+data[index].id+">'+data[index].name+'</button>')
+            $('#topic_list').append('<button class="dropdown-item" type="button" data-id="'+data[index].id+'" data-type="topic">'+data[index].name+'</button>')
         }
     }
 }

@@ -13,15 +13,21 @@ def show_dashboard(request):
     first_name = user.first_name
     last_name = user.last_name
     student_name = first_name + " " + last_name
-    return render(request, "dashboard/dashboard.html", {'student_name': student_name})
+
+    computer_organization = Subject.objects.get(name='Computer Organization')
+    data_structures = Subject.objects.get(name='Data Structures')
+
+    return render(request, "dashboard/dashboard.html", {'student_name': student_name,
+                                                        'computer_organization': computer_organization.id,
+                                                        'data_structures': data_structures.id})
 
 
 def get_reflection_data(request):
     user_id = request.user
-    subject_name = request.GET['subject']
-    subject = Subject.objects.get(name=subject_name)
-    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject=subject).order_by('id')[:5][::-1]
-    total_reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject=subject).count()
+    subject_id = request.GET['subject_id']
+    print(subject_id)
+    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id).order_by('id')[:5][::-1]
+    total_reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id).count()
     legend = return_topic_legend(reflections)
     return render(request, "dashboard/recent_reflections_table.html", {"reflections": reflections,
                                                                        "legend": legend,
@@ -30,26 +36,24 @@ def get_reflection_data(request):
 
 def get_recent_chart_data(request):
     user_id = request.user
-    subject_name = request.GET['subject']
-    subject = Subject.objects.get(name=subject_name)
-    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject=subject).order_by('id')[:5][::-1]
+    subject_id = request.GET['subject_id']
+    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id).order_by('id')[:5][::-1]
     chart_data = return_pie_chart_json(reflections)
     return JsonResponse(chart_data, safe=False)
 
 
 def get_complete_chart_data(request):
     user_id = request.user
-    subject_name = request.GET['subject']
-    subject = Subject.objects.get(name=subject_name)
-    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject=subject).order_by('id')
+    subject_id = request.GET['subject_id']
+    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id).order_by('id')
     chart_data = return_pie_chart_json(reflections)
     return JsonResponse(chart_data, safe=False)
 
 
 def get_bar_chart_data(request):
     user_id = request.user
-    subject_name = request.GET['subject']
-    chart_data = return_bar_chart_json(user_id, subject_name)
+    subject_id = request.GET['subject_id']
+    chart_data = return_bar_chart_json(user_id, subject_id)
     return JsonResponse(chart_data, safe=False)
 
 
@@ -114,10 +118,9 @@ def return_pie_chart_json(reflections):
     return json
 
 
-def return_bar_chart_json(user_id, subject_name):
-    subject = Subject.objects.get(name=subject_name)
-    topics = Topic.objects.filter(subject_id=subject).order_by('name')
-    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject=subject)
+def return_bar_chart_json(user_id, subject_id):
+    topics = Topic.objects.filter(subject_id=subject_id).order_by('name')
+    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id)
 
     labels = []
     values = []

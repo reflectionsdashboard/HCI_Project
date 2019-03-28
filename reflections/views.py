@@ -2,10 +2,16 @@ import json
 from django.shortcuts import render
 from reflections.models import *
 from django.http import JsonResponse
+from django.contrib.auth.models import User
 
 
 def show_reflections_view(request):
-	return render(request, 'reflections/reflections.html')
+	user_id = request.user
+	user = User.objects.get(username=user_id)
+	first_name = user.first_name
+	last_name = user.last_name
+	student_name = first_name + " " + last_name
+	return render(request, 'reflections/reflections.html', {'student_name': student_name})
 
 
 def get_reflection_data(request):

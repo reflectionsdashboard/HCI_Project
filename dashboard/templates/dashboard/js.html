@@ -6,16 +6,23 @@ var recentChart;
 var completeChart;
 var barChart;
 
-var selected_subject;
+var selected_subject_id;
 
 $(document).ready(function() {
 
-    selected_subject = $("input[name='options']:checked").val();
+    selected_subject_id = $("input[name='options']:checked").val();
+
+    localStorage.setItem("subject_id", selected_subject_id);
+
     callAjax()
 })
 
 $(document).on('change', 'input:radio[name="options"]', function (event) {
-    selected_subject = $("input[name='options']:checked").val();
+
+    selected_subject_id = $("input[name='options']:checked").val();
+
+    localStorage.setItem("subject_id", selected_subject_id);
+
     callAjax()
 });
 
@@ -23,7 +30,7 @@ function callAjax(){
 
     //Recent Reflections Data
     $.ajax({
-        data: { 'subject': selected_subject },
+        data: {'subject_id': selected_subject_id },
         method: "GET",
         url: "{%  url "dashboard:reflection-data"  %}",
         success: function(data){
@@ -44,7 +51,7 @@ function callAjax(){
 
     //Recent Chart Data
     $.ajax({
-        data: { 'subject': selected_subject },
+        data: { 'subject_id': selected_subject_id },
         method: "GET",
         url: "{%  url "dashboard:recent-chart-data" %}",
         success: function(data){
@@ -61,7 +68,7 @@ function callAjax(){
 
     //Complete Chart Data
     $.ajax({
-        data: { 'subject': selected_subject },
+        data: { 'subject_id': selected_subject_id },
         method: "GET",
         url: "{% url "dashboard:complete-chart-data" %}",
         success: function(data){
@@ -78,7 +85,7 @@ function callAjax(){
 
     //Bar Chart Data
     $.ajax({
-        data: { 'subject': selected_subject },
+        data: { 'subject_id': selected_subject_id },
         method: "GET",
         url: "{% url "dashboard:bar-chart-data" %}",
         success: function(data){
