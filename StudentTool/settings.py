@@ -25,9 +25,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '#hl+9l-^iu&pk2%nbtf$po+f6as023*xfhv8rkv$csb3ovh^v_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','limitless-tundra-70483.herokuapp.com/','hci-dashboard.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','hci-dashboard.herokuapp.com']
 
 # Application definition
 
