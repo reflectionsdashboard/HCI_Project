@@ -10,9 +10,13 @@ from django.contrib.auth.models import User
 def show_dashboard(request):
     user_id = request.user
     user = User.objects.get(username=user_id)
-    first_name = user.first_name
-    last_name = user.last_name
-    student_name = first_name + " " + last_name
+
+    if user.is_staff or user.is_superuser:
+        student_name = 'Expert'
+    else:
+        first_name = user.first_name
+        last_name = user.last_name
+        student_name = first_name + " " + last_name
 
     computer_organization = Subject.objects.get(name='Computer Organization')
     data_structures = Subject.objects.get(name='Data Structures')
@@ -24,10 +28,16 @@ def show_dashboard(request):
 
 def get_reflection_data(request):
     user_id = request.user
+    user = User.objects.get(username=user_id)
     subject_id = request.GET['subject_id']
-    print(subject_id)
-    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id).order_by('id')[:5][::-1]
-    total_reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id).count()
+
+    if user.is_staff or user.is_superuser:
+        reflections = Reflection.objects.filter(is_pending=False, subject_id=subject_id).order_by('id')[:5][::-1]
+        total_reflections = Reflection.objects.filter(is_pending=False, subject_id=subject_id).count()
+    else:
+        reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id).order_by('id')[:5][::-1]
+        total_reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id).count()
+
     legend = return_topic_legend(reflections)
     return render(request, "dashboard/recent_reflections_table.html", {"reflections": reflections,
                                                                        "legend": legend,
@@ -36,16 +46,31 @@ def get_reflection_data(request):
 
 def get_recent_chart_data(request):
     user_id = request.user
+    user = User.objects.get(username=user_id)
     subject_id = request.GET['subject_id']
-    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id).order_by('id')[:5][::-1]
+
+    if user.is_staff or user.is_superuser:
+        reflections = Reflection.objects.filter(is_pending=False,
+                                                subject_id=subject_id).order_by('id')[:5][::-1]
+    else:
+        reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False,
+                                                subject_id=subject_id).order_by('id')[:5][::-1]
+
     chart_data = return_pie_chart_json(reflections)
     return JsonResponse(chart_data, safe=False)
 
 
 def get_complete_chart_data(request):
     user_id = request.user
+    user = User.objects.get(username=user_id)
     subject_id = request.GET['subject_id']
-    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id).order_by('id')
+
+    if user.is_staff or user.is_superuser:
+        reflections = Reflection.objects.filter(is_pending=False, subject_id=subject_id).order_by('id')
+    else:
+        reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False,
+                                                subject_id=subject_id).order_by('id')
+
     chart_data = return_pie_chart_json(reflections)
     return JsonResponse(chart_data, safe=False)
 
@@ -95,8 +120,8 @@ def return_pie_chart_json(reflections):
         value = reflection_dict[key]/len(reflections)*10
         values.append(value)
         if key == 'Irrelevant':
-            background_colors.append(return_grey_color)
-            border_colors.append(return_grey_color)
+            background_colors.append(return_grey_color())
+            border_colors.append(return_grey_color())
         elif key == 'Accurate':
             background_colors.append(return_green_color_with_alpha('1'))
             border_colors.append(return_green_color_with_alpha('0.5'))
@@ -119,8 +144,13 @@ def return_pie_chart_json(reflections):
 
 
 def return_bar_chart_json(user_id, subject_id):
+    user = User.objects.get(username=user_id)
     topics = Topic.objects.filter(subject_id=subject_id).order_by('name')
-    reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id)
+
+    if user.is_staff or user.is_superuser:
+        reflections = Reflection.objects.filter(is_pending=False, subject_id=subject_id)
+    else:
+        reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id)
 
     labels = []
     values = []

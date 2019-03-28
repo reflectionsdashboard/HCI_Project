@@ -8,30 +8,52 @@ from django.contrib.auth.models import User
 def show_reflections_view(request):
 	user_id = request.user
 	user = User.objects.get(username=user_id)
-	first_name = user.first_name
-	last_name = user.last_name
-	student_name = first_name + " " + last_name
+
+	if user.is_staff or user.is_superuser:
+		student_name = 'Expert'
+	else:
+		first_name = user.first_name
+		last_name = user.last_name
+		student_name = first_name + " " + last_name
+
 	return render(request, 'reflections/reflections.html', {'student_name': student_name})
 
 
 def get_reflection_data(request):
 	user_id = request.user
+	user = User.objects.get(username=user_id)
+
 	subject_id = request.GET['subject']
 	topic_id = request.GET['topic']
 
-	if subject_id == '0':
-		if topic_id == '0':
-			reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False).order_by(
-				'date')
+	if user.is_staff or user.is_superuser:
+		if subject_id == '0':
+			if topic_id == '0':
+				reflections = Reflection.objects.filter(is_pending=False).order_by(
+					'date')
+			else:
+				reflections = Reflection.objects.filter(is_pending=False, topic_id=topic_id).order_by('date')
 		else:
-			reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, topic_id=topic_id).order_by('date')
+			if topic_id == '0':
+				reflections = Reflection.objects.filter(is_pending=False, subject_id=subject_id).order_by(
+					'date')
+			else:
+				reflections = Reflection.objects.filter(is_pending=False, subject_id=subject_id, topic_id=topic_id).order_by('date')
+
 	else:
-		if topic_id == '0':
-			reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id).order_by(
-				'date')
+		if subject_id == '0':
+			if topic_id == '0':
+				reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False).order_by(
+					'date')
+			else:
+				reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, topic_id=topic_id).order_by('date')
 		else:
-			reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id,
-													topic_id=topic_id).order_by('date')
+			if topic_id == '0':
+				reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id).order_by(
+					'date')
+			else:
+				reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id,
+														topic_id=topic_id).order_by('date')
 
 	return render(request, "reflections/data.html", {"reflections": reflections})
 
