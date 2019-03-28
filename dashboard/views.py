@@ -117,7 +117,7 @@ def return_pie_chart_json(reflections):
 
     for key in sorted(reflection_dict):
         labels.append(key)
-        value = reflection_dict[key]/len(reflections)*10
+        value = round(reflection_dict[key]/len(reflections)*10, 2)
         values.append(value)
         if key == 'Irrelevant':
             background_colors.append(return_grey_color())
@@ -178,7 +178,7 @@ def return_bar_chart_json(user_id, subject_id):
 
         value = accuracy_dict[key]
         if total_reflections_dict[key] > 0:
-            value = value/total_reflections_dict[key]*10
+            value = round(value/total_reflections_dict[key]*10, 2)
 
         values.append(value)
         bg_color = available_colors.pop()
