@@ -27,11 +27,13 @@ def show_dashboard(request):
 
 
 def get_reflection_data(request):
+    #Canvas Reflections
     user_id = request.user
     user = User.objects.get(username=user_id)
     subject_id = request.GET['subject_id']
 
-    if user.is_staff or user.is_superuser:
+    # if user.is_staff or user.is_superuser:
+    if True:
         reflections = Reflection.objects.filter(is_pending=False, subject_id=subject_id).order_by('id')[:5][::-1]
         total_reflections = Reflection.objects.filter(is_pending=False, subject_id=subject_id).count()
     else:
@@ -45,11 +47,13 @@ def get_reflection_data(request):
 
 
 def get_recent_chart_data(request):
+    #recent reflection chart
     user_id = request.user
     user = User.objects.get(username=user_id)
     subject_id = request.GET['subject_id']
 
-    if user.is_staff or user.is_superuser:
+    # if user.is_staff or user.is_superuser:
+    if True:
         reflections = Reflection.objects.filter(is_pending=False,
                                                 subject_id=subject_id).order_by('id')[:5][::-1]
     else:
@@ -61,11 +65,13 @@ def get_recent_chart_data(request):
 
 
 def get_complete_chart_data(request):
+    #Overall reflection chart
     user_id = request.user
     user = User.objects.get(username=user_id)
     subject_id = request.GET['subject_id']
 
-    if user.is_staff or user.is_superuser:
+    # if user.is_staff or user.is_superuser:
+    if True:
         reflections = Reflection.objects.filter(is_pending=False, subject_id=subject_id).order_by('id')
     else:
         reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False,
@@ -144,10 +150,12 @@ def return_pie_chart_json(reflections):
 
 
 def return_bar_chart_json(user_id, subject_id):
+    #Column Chart
     user = User.objects.get(username=user_id)
     topics = Topic.objects.filter(subject_id=subject_id).order_by('name')
 
-    if user.is_staff or user.is_superuser:
+    # if user.is_staff or user.is_superuser:
+    if True:
         reflections = Reflection.objects.filter(is_pending=False, subject_id=subject_id)
     else:
         reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id)
