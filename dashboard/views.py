@@ -46,41 +46,6 @@ def get_reflection_data(request):
                                                                        "total_reflections": total_reflections})
 
 
-def get_recent_chart_data(request):
-    #recent reflection chart
-    user_id = request.user
-    user = User.objects.get(username=user_id)
-    subject_id = request.GET['subject_id']
-
-    # if user.is_staff or user.is_superuser:
-    if True:
-        reflections = Reflection.objects.filter(is_pending=False,
-                                                subject_id=subject_id).order_by('id')[:5][::-1]
-    else:
-        reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False,
-                                                subject_id=subject_id).order_by('id')[:5][::-1]
-
-    chart_data = return_pie_chart_json(reflections)
-    return JsonResponse(chart_data, safe=False)
-
-
-def get_complete_chart_data(request):
-    #Overall reflection chart
-    user_id = request.user
-    user = User.objects.get(username=user_id)
-    subject_id = request.GET['subject_id']
-
-    # if user.is_staff or user.is_superuser:
-    if True:
-        reflections = Reflection.objects.filter(is_pending=False, subject_id=subject_id).order_by('id')
-    else:
-        reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False,
-                                                subject_id=subject_id).order_by('id')
-
-    chart_data = return_pie_chart_json(reflections)
-    return JsonResponse(chart_data, safe=False)
-
-
 def get_bar_chart_data(request):
     user_id = request.user
     subject_id = request.GET['subject_id']
@@ -94,59 +59,6 @@ def return_topic_legend(reflections):
     topics.sort(key=lambda topic: topic.id)
     legend = ', '.join(topic.mapping() for topic in topics)
     return legend
-
-
-def return_pie_chart_json(reflections):
-    inaccurate_categories = [reflection.inaccuracy_category.description for reflection in reflections
-                             if reflection.inaccuracy_category is not None]
-    inaccurate_categories.sort()
-
-    reflection_dict = defaultdict(int)
-
-    for reflection in reflections:
-        if reflection.topic is None:
-            reflection_dict['Irrelevant'] += 10
-        else:
-            if reflection.inaccuracy_category is None:
-                reflection_dict['Accurate'] += reflection.accuracy
-            else:
-                reflection_dict[reflection.inaccuracy_category.description] += (10 - reflection.accuracy)
-                reflection_dict['Accurate'] += reflection.accuracy
-
-    available_colors = return_available_colors()
-    available_border_colors = return_available_border_colors()
-
-    labels = []
-    values = []
-    background_colors = []
-    border_colors = []
-
-    for key in sorted(reflection_dict):
-        labels.append(key)
-        value = round(reflection_dict[key]/len(reflections)*10, 2)
-        values.append(value)
-        if key == 'Irrelevant':
-            background_colors.append(return_grey_color())
-            border_colors.append(return_grey_color())
-        elif key == 'Accurate':
-            background_colors.append(return_green_color_with_alpha('1'))
-            border_colors.append(return_green_color_with_alpha('0.5'))
-        else:
-            bg_color = available_colors.pop()
-            br_color = available_border_colors.pop()
-            background_colors.append(bg_color)
-            border_colors.append(br_color)
-
-    json = {}
-    json['labels'] = labels
-    dataset = {}
-    dataset['data'] = values
-    dataset['backgroundColor'] = background_colors
-    dataset['borderColor'] = border_colors
-    dataset['borderWidth'] = 1
-    json['datasets'] = [dataset]
-
-    return json
 
 
 def return_bar_chart_json(user_id, subject_id):

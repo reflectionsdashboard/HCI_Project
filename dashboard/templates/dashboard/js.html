@@ -2,8 +2,6 @@
 
 <script>
 
-var recentChart;
-var completeChart;
 var barChart;
 
 var selected_subject_id;
@@ -49,40 +47,6 @@ function callAjax(){
         }
     })
 
-    //Recent Chart Data
-    $.ajax({
-        data: { 'subject_id': selected_subject_id },
-        method: "GET",
-        url: "{%  url "dashboard:recent-chart-data" %}",
-        success: function(data){
-            setRecentChart(data)
-        },
-        error: function(error_data){
-
-            recentChart.destroy()
-
-            console.log("error")
-            console.log(error_data)
-        }
-    })
-
-    //Complete Chart Data
-    $.ajax({
-        data: { 'subject_id': selected_subject_id },
-        method: "GET",
-        url: "{% url "dashboard:complete-chart-data" %}",
-        success: function(data){
-            setCompleteChart(data)
-        },
-        error: function(error_data){
-
-            completeChart.destroy()
-
-            console.log("error")
-            console.log(error_data)
-        }
-    })
-
     //Bar Chart Data
     $.ajax({
         data: { 'subject_id': selected_subject_id },
@@ -101,84 +65,6 @@ function callAjax(){
         }
     })
 
-}
-
-function setRecentChart(data){
-
-    if (completeChart)
-    {
-        completeChart.destroy()
-    }
-
-    let ctx = document.getElementById("recent_pie_chart").getContext('2d');
-    completeChart = new Chart(ctx, {
-        type: 'pie',
-        data: data,
-        options: {
-            responsive: true,
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: true,
-                text: 'Recent reflections accuracy'
-            },
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            },
-            tooltips: {
-              callbacks: {
-                label: function(tooltipItem, data) {
-                  //get the concerned dataset
-                  let dataset = data.datasets[tooltipItem.datasetIndex];
-                  let currentValue = dataset.data[tooltipItem.index];
-
-                  return currentValue + "%";
-                }
-              }
-            }
-        }
-    });
-}
-
-function setCompleteChart(data){
-
-    if(recentChart)
-    {
-        recentChart.destroy()
-    }
-
-    let ctx = document.getElementById("complete_pie_chart").getContext('2d');
-    recentChart = new Chart(ctx, {
-        type: 'pie',
-        data: data,
-        options: {
-            responsive: true,
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: true,
-                text: 'Overall reflections accuracy'
-            },
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            },
-            tooltips: {
-              callbacks: {
-                label: function(tooltipItem, data) {
-                  //get the concerned dataset
-                  let dataset = data.datasets[tooltipItem.datasetIndex];
-                  let currentValue = dataset.data[tooltipItem.index];
-
-                  return currentValue + "%";
-                }
-              }
-            }
-        }
-    });
 }
 
 function setBarChart(data){
