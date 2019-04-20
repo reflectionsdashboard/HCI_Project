@@ -32,8 +32,8 @@ def get_reflection_data(request):
     user = User.objects.get(username=user_id)
     subject_id = request.GET['subject_id']
 
-    # if user.is_staff or user.is_superuser:
-    if True:
+    if user.is_staff or user.is_superuser:
+    # if True:
         reflections = Reflection.objects.filter(is_pending=False, subject_id=subject_id).order_by('id')[:5][::-1]
         total_reflections = Reflection.objects.filter(is_pending=False, subject_id=subject_id).count()
     else:
@@ -66,8 +66,8 @@ def return_bar_chart_json(user_id, subject_id):
     user = User.objects.get(username=user_id)
     topics = Topic.objects.filter(subject_id=subject_id).order_by('name')
 
-    # if user.is_staff or user.is_superuser:
-    if True:
+    if user.is_staff or user.is_superuser:
+    # if True:
         reflections = Reflection.objects.filter(is_pending=False, subject_id=subject_id)
     else:
         reflections = Reflection.objects.filter(student_handle=user_id, is_pending=False, subject_id=subject_id)
